@@ -1019,7 +1019,8 @@
     <div class="dot" data-target="portfolio" role="button" tabindex="0"></div>
   </nav>
 
-  <!-- ═══════════════════ PAGE 1 — ABOUT ═══════════════════ -->
+  <main id="main-content">
+    <!-- ═══════════════════ PAGE 1 — ABOUT ═══════════════════ -->
   <section class="section active" id="about">
     <div class="dot-grid"></div>
 
@@ -1327,6 +1328,7 @@
     </div>
     <span class="section-num" aria-hidden="true">03 / 03</span>
   </section>
+  </main>
 
   <script>
     /* ── Helpers ── */
@@ -1335,6 +1337,7 @@
       !(window.matchMedia('(orientation:landscape) and (max-height:500px)').matches);
 
     const sectionIds = ['about', 'experience', 'portfolio'];
+    const mainContent = document.getElementById('main-content');
     const sections = document.querySelectorAll('.section');
     const dots = document.querySelectorAll('.dot');
     const navLinks = document.querySelectorAll('.nav-links a');
@@ -1346,6 +1349,11 @@
       if (idx < 0 || idx >= sectionIds.length) return;
       const targetEl = document.getElementById(sectionIds[idx]);
       if (targetEl) {
+        // 重置位移，確保定位準確
+        if (mainContent) {
+          mainContent.style.transition = 'transform 0.4s ease';
+          mainContent.style.transform = 'translateY(0)';
+        }
         targetEl.scrollIntoView({ behavior: 'smooth' });
       }
     }
@@ -1385,23 +1393,22 @@
 
       clearTimeout(resetTimer);
       resetTimer = setTimeout(() => {
-        if (!transitioning) {
+        if (!transitioning && mainContent) {
           deltaAccum = 0;
-          document.body.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
-          document.body.style.transform = `translateY(0)`;
+          mainContent.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+          mainContent.style.transform = `translateY(0)`;
         }
       }, 150);
 
       deltaAccum += e.deltaY;
 
       // 位移預覽 (Peeking)：讓使用者感覺到正在施力
-      // 限制預覽位移量，避免晃動過大
       const maxPeek = 60;
       const peek = Math.max(Math.min(-deltaAccum * 0.15, maxPeek), -maxPeek);
 
-      if (!transitioning) {
-        document.body.style.transition = 'none';
-        document.body.style.transform = `translateY(${peek}px)`;
+      if (!transitioning && mainContent) {
+        mainContent.style.transition = 'none';
+        mainContent.style.transform = `translateY(${peek}px)`;
       }
 
       if (Math.abs(deltaAccum) >= WHEEL_THRESHOLD) {
@@ -1412,9 +1419,11 @@
           deltaAccum = 0;
           transitioning = true;
 
-          // 恢復 body 位移並執行換頁
-          document.body.style.transition = 'transform 0.4s ease';
-          document.body.style.transform = `translateY(0)`;
+          // 恢復主容器位移並執行換頁
+          if (mainContent) {
+            mainContent.style.transition = 'transform 0.4s ease';
+            mainContent.style.transform = `translateY(0)`;
+          }
 
           goTo(nextIdx);
 
@@ -1422,8 +1431,10 @@
         } else {
           // 到底部或頂部了，回彈
           deltaAccum = 0;
-          document.body.style.transition = 'transform 0.4s var(--bounce)';
-          document.body.style.transform = `translateY(0)`;
+          if (mainContent) {
+            mainContent.style.transition = 'transform 0.4s var(--bounce)';
+            mainContent.style.transform = `translateY(0)`;
+          }
         }
       }
     }, { passive: false });
