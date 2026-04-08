@@ -53,7 +53,9 @@
     html,
     body {
       height: 100%;
-      overflow: hidden;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
     }
 
     body {
@@ -67,17 +69,14 @@
      SECTION — fade mode (desktop)
   ═══════════════════════════════ */
     .section {
-      position: fixed;
-      inset: 0;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .7s ease;
+      position: relative;
+      min-height: 100vh;
       display: flex;
       align-items: safe center;
-      /* 確保內容過長時不會切掉頂部 */
       justify-content: center;
       padding: calc(var(--nav-h) + 1.75rem) 4rem 2.5rem;
-      overflow-y: auto;
+      scroll-snap-align: start;
+      scroll-margin-top: 0;
 
       /* 隱藏捲軸但保留功能 */
       scrollbar-width: none;
@@ -86,12 +85,6 @@
 
     .section::-webkit-scrollbar {
       display: none;
-    }
-
-    .section.active {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 5;
     }
 
     /* ── Dot Grid ── */
@@ -1174,45 +1167,19 @@
       !(window.matchMedia('(orientation:landscape) and (max-height:500px)').matches);
 
     const sectionIds = ['about', 'experience', 'portfolio'];
+    const sections = document.querySelectorAll('.section');
     const dots = document.querySelectorAll('.dot');
     const navLinks = document.querySelectorAll('.nav-links a');
 
     let current = 0;
-    let transitioning = false;
-    let deltaAccum = 0;
-    let resetTimer = null;
 
     /* ── Navigate to section idx ── */
     function goTo(idx) {
       if (idx < 0 || idx >= sectionIds.length) return;
-      if (transitioning) return;
-      if (idx === current && isDesktop()) return;
-
-      transitioning = true;
-      deltaAccum = 0;
-
-      if (isDesktop()) {
-        document.getElementById(sectionIds[current]).classList.remove('active');
-        document.getElementById(sectionIds[idx]).classList.add('active');
+      const targetEl = document.getElementById(sectionIds[idx]);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
       }
-      current = idx;
-
-      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-      navLinks.forEach((l, i) => l.classList.toggle('active', i === idx));
-
-      /* Trigger fade-ins for newly visible section */
-      document.getElementById(sectionIds[idx])
-        .querySelectorAll('.fade-in:not(.visible)')
-        .forEach(el => requestAnimationFrame(() => el.classList.add('visible')));
-
-      setTimeout(() => {
-        transitioning = false;
-        // 切換完成後清除行內樣式，確保下一輪滾動正常
-        document.querySelectorAll('.section').forEach(s => {
-          s.style.opacity = '';
-          s.style.transform = '';
-        });
-      }, 900);
     }
 
     /* ── Dot / nav-link click ── */
@@ -1220,8 +1187,6 @@
       const go = () => {
         const idx = sectionIds.indexOf(dot.dataset.target);
         goTo(idx);
-        if (!isDesktop()) document.getElementById(dot.dataset.target)
-          .scrollIntoView({ behavior: 'smooth' });
       };
       dot.addEventListener('click', go);
       dot.addEventListener('keydown', e => {
@@ -1235,76 +1200,56 @@
         const id = link.getAttribute('href').slice(1);
         const idx = sectionIds.indexOf(id);
         goTo(idx);
-        if (!isDesktop()) document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
       });
     });
 
-    /* ══════════════════════════════════════════
-       滾動控制 — 調整閥值與即時預覽效果
-       閥值 (WHEEL_THRESHOLD): 
-       - 100-120 為滑鼠滾輪一下轉動的標準值
-       - 此處設為 160，約為 1 下多一點即可換頁
-    ══════════════════════════════════════════ */
-    const WHEEL_THRESHOLD = 100; // <--- 在這裡修改滾動閥值
+    /* ── Intersection Observer: 追蹤當前頁面 ── */
+    const observerOptions = {
+      root: null,
+      threshold: 0.8, // 頁面超過一半進入視窗時觸發
+      rootMargin: '0px'
+    };
 
-    window.addEventListener('wheel', e => {
-      if (!isDesktop() || transitioning) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          const idx = sectionIds.indexOf(id);
+          current = idx;
 
-      /* 清除重置計時器 */
-      clearTimeout(resetTimer);
+          // 更新點點與連結狀態
+          dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+          navLinks.forEach((l, i) => l.classList.toggle('active', i === idx));
 
-      // 如果停止滾動，則將頁面樣式回復原狀
-      resetTimer = setTimeout(() => {
-        deltaAccum = 0;
-        const currentSection = document.getElementById(sectionIds[current]);
-        if (currentSection) {
-          currentSection.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-          currentSection.style.opacity = '1';
-          currentSection.style.transform = 'scale(1)';
+          // 觸發該頁面的內文動畫
+          entry.target.querySelectorAll('.fade-in:not(.visible)')
+            .forEach(el => {
+              // 加上一點點延遲讓滾動穩定後再出現
+              setTimeout(() => el.classList.add('visible'), 100);
+            });
         }
-      }, 150);
+      });
+    }, observerOptions);
 
-      deltaAccum += e.deltaY;
+    sections.forEach(s => observer.observe(s));
 
-      // 計算滾動進度 (0 ~ 1) 並套用即時淡出效果
-      const progress = Math.min(Math.abs(deltaAccum) / WHEEL_THRESHOLD, 0.85);
-      const currentSection = document.getElementById(sectionIds[current]);
-
-      if (currentSection) {
-        // 關掉原本的 transition 以便即時響應滾輪速度
-        currentSection.style.transition = 'none';
-        currentSection.style.opacity = 1 - (progress * 0.45); // 最大淡出至 0.55
-        currentSection.style.transform = `scale(${1 - (progress * 0.02)})`; // 稍微縮小 2%
-      }
-
-      if (deltaAccum > WHEEL_THRESHOLD) {
-        deltaAccum = 0;
+    /* ── Keyboard nav ── */
+    window.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        e.preventDefault();
         goTo(current + 1);
       }
-      if (deltaAccum < -WHEEL_THRESHOLD) {
-        deltaAccum = 0;
+      if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
         goTo(current - 1);
       }
-    }, { passive: true });
-
-    /* ── Keyboard nav (desktop) ── */
-    window.addEventListener('keydown', e => {
-      if (!isDesktop()) return;
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
-      if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
     });
 
-    /* ── Touch swipe (desktop fade mode) ── */
-    let touchY0 = 0;
-    window.addEventListener('touchstart', e => { touchY0 = e.touches[0].clientY; }, { passive: true });
-    window.addEventListener('touchend', e => {
-      if (!isDesktop()) return;
-      const dy = touchY0 - e.changedTouches[0].clientY;
-      if (Math.abs(dy) > 70) goTo(current + (dy > 0 ? 1 : -1));
-    }, { passive: true });
-
-    /* ── Initial fade-ins for #about ── */
-    document.querySelectorAll('#about .fade-in').forEach(el => el.classList.add('visible'));
+    /* ── 初始檢查 ── */
+    // 確保重新導航或重新整理時能正常觸發首頁動畫
+    if (window.scrollY === 0) {
+      document.querySelectorAll('#about .fade-in').forEach(el => el.classList.add('visible'));
+    }
   </script>
 </body>
 
