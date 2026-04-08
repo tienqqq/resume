@@ -1266,6 +1266,8 @@
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        const fadeElements = entry.target.querySelectorAll('.fade-in');
+        
         if (entry.isIntersecting) {
           const id = entry.target.id;
           const idx = sectionIds.indexOf(id);
@@ -1274,10 +1276,15 @@
           dots.forEach((d, i) => d.classList.toggle('active', i === idx));
           navLinks.forEach((l, i) => l.classList.toggle('active', i === idx));
 
-          entry.target.querySelectorAll('.fade-in:not(.visible)')
-            .forEach(el => {
-              setTimeout(() => el.classList.add('visible'), 100);
-            });
+          // 進入頁面時彈出元件
+          fadeElements.forEach(el => {
+            el.classList.add('visible');
+          });
+        } else {
+          // 離開頁面時恢復原狀 (移除 visible)，下次抵達時才會再次觸發動畫
+          fadeElements.forEach(el => {
+            el.classList.remove('visible');
+          });
         }
       });
     }, observerOptions);
