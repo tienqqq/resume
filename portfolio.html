@@ -53,9 +53,8 @@
     html,
     body {
       height: 100%;
-      overflow-y: auto;
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
+      overflow: hidden;
+      /* 改為隱藏，由 JS 控制 */
     }
 
     body {
@@ -75,8 +74,6 @@
       align-items: safe center;
       justify-content: center;
       padding: calc(var(--nav-h) + 1.75rem) 4rem 2.5rem;
-      scroll-snap-align: start;
-      scroll-margin-top: 0;
 
       /* 隱藏捲軸但保留功能 */
       scrollbar-width: none;
@@ -1203,10 +1200,67 @@
       });
     });
 
-    /* ── Intersection Observer: 追蹤當前頁面 ── */
+    /* ── 滾動閥值控制 (由 JS 驅動垂直捲動) ── */
+    const WHEEL_THRESHOLD = 256; // <--- 修改這裡：數值越大，需要「多滾一點」才能換頁
+    let deltaAccum = 0;
+    let resetTimer = null;
+    let transitioning = false;
+
+    window.addEventListener('wheel', e => {
+      // 僅在桌面版且非轉場中生效
+      if (!isDesktop() || transitioning) return;
+
+      e.preventDefault(); // 攔截原生滾動
+
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        if (!transitioning) {
+          deltaAccum = 0;
+          document.body.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+          document.body.style.transform = `translateY(0)`;
+        }
+      }, 150);
+
+      deltaAccum += e.deltaY;
+
+      // 位移預覽 (Peeking)：讓使用者感覺到正在施力
+      // 限制預覽位移量，避免晃動過大
+      const maxPeek = 60;
+      const peek = Math.max(Math.min(-deltaAccum * 0.15, maxPeek), -maxPeek);
+
+      if (!transitioning) {
+        document.body.style.transition = 'none';
+        document.body.style.transform = `translateY(${peek}px)`;
+      }
+
+      if (Math.abs(deltaAccum) >= WHEEL_THRESHOLD) {
+        const dir = deltaAccum > 0 ? 1 : -1;
+        const nextIdx = current + dir;
+
+        if (nextIdx >= 0 && nextIdx < sectionIds.length) {
+          deltaAccum = 0;
+          transitioning = true;
+
+          // 恢復 body 位移並執行換頁
+          document.body.style.transition = 'transform 0.4s ease';
+          document.body.style.transform = `translateY(0)`;
+
+          goTo(nextIdx);
+
+          setTimeout(() => { transitioning = false; }, 800);
+        } else {
+          // 到底部或頂部了，回彈
+          deltaAccum = 0;
+          document.body.style.transition = 'transform 0.4s var(--bounce)';
+          document.body.style.transform = `translateY(0)`;
+        }
+      }
+    }, { passive: false });
+
+    /* ── Intersection Observer ── */
     const observerOptions = {
       root: null,
-      threshold: 0.8, // 頁面超過一半進入視窗時觸發
+      threshold: 0.8,
       rootMargin: '0px'
     };
 
@@ -1217,14 +1271,11 @@
           const idx = sectionIds.indexOf(id);
           current = idx;
 
-          // 更新點點與連結狀態
           dots.forEach((d, i) => d.classList.toggle('active', i === idx));
           navLinks.forEach((l, i) => l.classList.toggle('active', i === idx));
 
-          // 觸發該頁面的內文動畫
           entry.target.querySelectorAll('.fade-in:not(.visible)')
             .forEach(el => {
-              // 加上一點點延遲讓滾動穩定後再出現
               setTimeout(() => el.classList.add('visible'), 100);
             });
         }
@@ -1245,8 +1296,6 @@
       }
     });
 
-    /* ── 初始檢查 ── */
-    // 確保重新導航或重新整理時能正常觸發首頁動畫
     if (window.scrollY === 0) {
       document.querySelectorAll('#about .fade-in').forEach(el => el.classList.add('visible'));
     }
