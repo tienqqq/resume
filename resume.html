@@ -64,6 +64,10 @@
       line-height: 1.6;
     }
 
+    /* ── Language Visibility ── */
+    html[lang="zh-TW"] [data-en] { display: none !important; }
+    html[lang="en"] [data-zh] { display: none !important; }
+
     /* ═══════════════════════════════
      SECTION — fade mode (desktop)
   ═══════════════════════════════ */
@@ -160,6 +164,54 @@
     .nav-links a:hover::after,
     .nav-links a.active::after {
       transform: scaleX(1);
+    }
+
+    /* ── Language Switcher ── */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 9px 12px 6px 14px / 12px 8px 13px 7px;
+      padding: 2px;
+      margin-left: 1.5rem;
+      box-shadow: 2px 2px 0 var(--border);
+      position: relative;
+    }
+
+    .lang-btn {
+      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s var(--bounce);
+      line-height: 1;
+    }
+
+    .lang-btn.active {
+      background: var(--amber);
+      color: var(--text);
+      box-shadow: 1.5px 1.5px 0 var(--border);
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: var(--amber);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 600px) {
+      .lang-switcher {
+        margin-left: 0.5rem;
+        padding: 1px;
+      }
+      .lang-btn {
+        padding: 3px 6px;
+        font-size: 0.7rem;
+      }
     }
 
     /* ── Side Dots ── */
@@ -921,19 +973,35 @@
           stroke-linejoin="round" />
         <path d="M10.5 5.5L13.5 8.5" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" />
       </svg>
-      Your Name
+      <span data-zh>你的名字</span>
+      <span data-en>Your Name</span>
     </div>
-    <ul class="nav-links">
-      <li><a href="#about" class="active">關於我</a></li>
-      <li><a href="#experience">經歷</a></li>
-      <li><a href="#portfolio">作品集</a></li>
-    </ul>
+    <div style="display: flex; align-items: center;">
+      <ul class="nav-links">
+        <li><a href="#about" class="active">
+            <span data-zh>關於我</span>
+            <span data-en>About</span>
+          </a></li>
+        <li><a href="#experience">
+            <span data-zh>經歷</span>
+            <span data-en>Experience</span>
+          </a></li>
+        <li><a href="#portfolio">
+            <span data-zh>作品集</span>
+            <span data-en>Portfolio</span>
+          </a></li>
+      </ul>
+      <div class="lang-switcher" role="group" aria-label="Language Switcher">
+        <button class="lang-btn active" data-lang-set="zh-TW">中</button>
+        <button class="lang-btn" data-lang-set="en">EN</button>
+      </div>
+    </div>
   </nav>
 
   <nav class="nav-dots" aria-label="頁面導航">
-    <div class="dot active" data-target="about" role="button" tabindex="0" aria-label="關於我"></div>
-    <div class="dot" data-target="experience" role="button" tabindex="0" aria-label="經歷"></div>
-    <div class="dot" data-target="portfolio" role="button" tabindex="0" aria-label="作品集"></div>
+    <div class="dot active" data-target="about" role="button" tabindex="0"></div>
+    <div class="dot" data-target="experience" role="button" tabindex="0"></div>
+    <div class="dot" data-target="portfolio" role="button" tabindex="0"></div>
   </nav>
 
   <!-- ═══════════════════ PAGE 1 — ABOUT ═══════════════════ -->
@@ -970,34 +1038,54 @@
             <path d="M2 7h10M8 3l4 4-4 4" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round"
               stroke-linejoin="round" />
           </svg>
-          Hello, I'm
+          <span data-zh>你好，我是</span>
+          <span data-en>Hello, I'm</span>
         </div>
-        <h1 class="name"><span class="name-hl">Your</span><br>Name Here</h1>
-        <p class="tagline">一段簡短有力的自我介紹，說明你是誰、你做什麼、你的熱情所在。</p>
+        <h1 class="name">
+          <span data-zh><span class="name-hl">你的</span><br>名字</span>
+          <span data-en><span class="name-hl">Your</span><br>Name Here</span>
+        </h1>
+        <p class="tagline">
+          <span data-zh>一段簡短有力的自我介紹，說明你是誰、你做什麼、你的熱情所在。</span>
+          <span data-en>A short and powerful self-introduction explaining who you are, what you do, and your passion.</span>
+        </p>
         <div class="bio-box">
-          這裡放稍微詳細一點的介紹，例如你的背景、專長方向，或是一兩句讓人印象深刻的話。保持簡潔有力即可。
+          <span data-zh>這裡放稍微詳細一點的介紹，例如你的背景、專長方向，或是一兩句讓人印象深刻的話。保持簡潔有力即可。</span>
+          <span data-en>Detailed introduction here, like your background, expertise, or a couple of impressive sentences. Keep it concise and impactful.</span>
         </div>
       </div>
 
       <div class="about-right fade-in" style="transition-delay:.15s">
-        <div class="skills-label">Technical Skills</div>
+        <div class="skills-label">
+          <span data-zh>技術技能</span>
+          <span data-en>Technical Skills</span>
+        </div>
 
         <div class="skill-group">
-          <div class="skill-group-label">Frontend</div>
+          <div class="skill-group-label">
+            <span data-zh>前端開發</span>
+            <span data-en>Frontend</span>
+          </div>
           <div class="skill-tags">
             <span class="tag">React</span><span class="tag">Vue.js</span>
             <span class="tag">TypeScript</span><span class="tag">CSS / SASS</span>
           </div>
         </div>
         <div class="skill-group">
-          <div class="skill-group-label">Backend</div>
+          <div class="skill-group-label">
+            <span data-zh>後端開發</span>
+            <span data-en>Backend</span>
+          </div>
           <div class="skill-tags">
             <span class="tag">Node.js</span><span class="tag">Python</span>
             <span class="tag">PostgreSQL</span><span class="tag">REST API</span>
           </div>
         </div>
         <div class="skill-group">
-          <div class="skill-group-label">Tools &amp; Others</div>
+          <div class="skill-group-label">
+            <span data-zh>工具與其他</span>
+            <span data-en>Tools &amp; Others</span>
+          </div>
           <div class="skill-tags">
             <span class="tag">Git</span><span class="tag">Docker</span>
             <span class="tag">Figma</span><span class="tag">Vercel</span>
@@ -1008,7 +1096,8 @@
     </div>
 
     <div class="scroll-hint" aria-hidden="true">
-      <span>scroll</span>
+      <span data-zh>向下滾動</span>
+      <span data-en>scroll</span>
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M8 3v10M8 13L4 9M8 13l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
           stroke-linejoin="round" />
@@ -1042,7 +1131,8 @@
           <line x1="8" y1="14" x2="20" y2="14" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" />
           <line x1="8" y1="18" x2="16" y2="18" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" />
         </svg>
-        Experience
+        <span data-zh>學經歷</span>
+        <span data-en>Experience</span>
         <div class="hline" aria-hidden="true"></div>
       </h2>
 
@@ -1051,34 +1141,70 @@
         <!-- ● Dot 1 (2021/09) — 研究所 -->
         <div class="timeline-item fade-in">
           <div class="item-meta">
-            <span class="item-type edu">研究所</span>
+            <span class="item-type edu">
+              <span data-zh>研究所</span>
+              <span data-en>Graduate</span>
+            </span>
             <span class="item-period">2021/09 — 2023/07</span>
           </div>
-          <div class="item-title">碩士學位名稱</div>
-          <div class="item-org">學校名稱 · 系所名稱</div>
-          <div class="item-desc">研究方向或論文主題的簡短描述。說明你在這段期間學習了什麼、做了哪些研究、有哪些成果或發表。</div>
+          <div class="item-title">
+            <span data-zh>碩士學位名稱</span>
+            <span data-en>Master of Science / Arts</span>
+          </div>
+          <div class="item-org">
+            <span data-zh>學校名稱 · 系所名稱</span>
+            <span data-en>University Name · Department</span>
+          </div>
+          <div class="item-desc">
+            <span data-zh>研究方向或論文主題的簡短描述。說明你在這段期間學習了什麼、做了哪些研究、有哪些成果或發表。</span>
+            <span data-en>Short description of your research direction or thesis. Explain what you learned, research conducted, and achievements.</span>
+          </div>
         </div>
 
         <!-- ● Dot 3 (2024/04) — 第一份工作 -->
         <div class="timeline-item fade-in" style="transition-delay:.1s">
           <div class="item-meta">
-            <span class="item-type">工作</span>
-            <span class="item-period">2024/04 — 現在</span>
+            <span class="item-type">
+              <span data-zh>工作</span>
+              <span data-en>Work</span>
+            </span>
+            <span class="item-period">2024/04 — <span data-zh>現在</span><span data-en>Present</span></span>
           </div>
-          <div class="item-title">職稱 / Job Title</div>
-          <div class="item-org">公司名稱 · 部門</div>
-          <div class="item-desc">這份工作的主要職責與成果。用數字或具體事蹟來呈現更有說服力，例如「負責 XX 系統開發，提升效率 30%」。</div>
+          <div class="item-title">
+            <span data-zh>職稱 / Job Title</span>
+            <span data-en>Software Engineer</span>
+          </div>
+          <div class="item-org">
+            <span data-zh>公司名稱 · 部門</span>
+            <span data-en>Company Name · Team</span>
+          </div>
+          <div class="item-desc">
+            <span data-zh>這份工作的主要職責與成果。用數字或具體事蹟來呈現更有說服力，例如「負責 XX 系統開發，提升效率 30%」。</span>
+            <span data-en>Main responsibilities and achievements. Use numbers to be more convincing, e.g., "Responsible for system development, improving efficiency by 30%."</span>
+          </div>
         </div>
 
         <!-- ● Dot 4 (2026/01) — 第二份工作 -->
         <div class="timeline-item fade-in" style="transition-delay:.2s">
           <div class="item-meta">
-            <span class="item-type">工作</span>
-            <span class="item-period">2026/01 — 現在</span>
+            <span class="item-type">
+              <span data-zh>工作</span>
+              <span data-en>Work</span>
+            </span>
+            <span class="item-period">2026/01 — <span data-zh>現在</span><span data-en>Present</span></span>
           </div>
-          <div class="item-title">第二份職稱</div>
-          <div class="item-org">第二家公司名稱</div>
-          <div class="item-desc">描述這份工作的內容與你的貢獻。</div>
+          <div class="item-title">
+            <span data-zh>第二份職稱</span>
+            <span data-en>Senior Role Title</span>
+          </div>
+          <div class="item-org">
+            <span data-zh>第二家公司名稱</span>
+            <span data-en>Another Company Name</span>
+          </div>
+          <div class="item-desc">
+            <span data-zh>描述這份工作的內容與你的貢獻。</span>
+            <span data-en>Describe your responsibilities and contributions here.</span>
+          </div>
         </div>
 
         <!-- ● Dot 5 (現在) — end marker -->
@@ -1116,7 +1242,8 @@
           <circle cx="12" cy="8" r="1.5" fill="#EC4899" />
           <circle cx="17" cy="8" r="1.5" fill="#1A1A1A" opacity=".3" />
         </svg>
-        Portfolio
+        <span data-zh>作品集</span>
+        <span data-en>Portfolio</span>
         <div class="hline" aria-hidden="true"></div>
       </h2>
 
@@ -1124,35 +1251,62 @@
         <div class="project-card fade-in">
           <span class="card-num">01</span>
           <div class="card-icon" aria-hidden="true">🌐</div>
-          <div class="card-title">作品名稱 A</div>
-          <div class="card-desc">簡短說明這個作品是什麼、解決了什麼問題、你的角色是什麼。</div>
+          <div class="card-title">
+            <span data-zh>作品名稱 A</span>
+            <span data-en>Project Name A</span>
+          </div>
+          <div class="card-desc">
+            <span data-zh>簡短說明這個作品是什麼、解決了什麼問題、你的角色是什麼。</span>
+            <span data-en>Briefly explain what this project is, the problem it solved, and your specific role.</span>
+          </div>
           <div class="card-tags">
             <span class="card-tag">React</span><span class="card-tag">Node.js</span><span
               class="card-tag">Supabase</span>
           </div>
-          <a class="card-link" href="#">View →</a>
+          <a class="card-link" href="#">
+            <span data-zh>查看作品 →</span>
+            <span data-en>View →</span>
+          </a>
         </div>
 
         <div class="project-card fade-in" style="transition-delay:.1s">
           <span class="card-num">02</span>
           <div class="card-icon" aria-hidden="true">🤖</div>
-          <div class="card-title">作品名稱 B</div>
-          <div class="card-desc">另一個作品的簡要描述，突出最有亮點的部分。</div>
+          <div class="card-title">
+            <span data-zh>作品名稱 B</span>
+            <span data-en>Project Name B</span>
+          </div>
+          <div class="card-desc">
+            <span data-zh>另一個作品的簡要描述，突出最有亮點的部分。</span>
+            <span data-en>Another brief description of a project, highlighting its most impressive aspects.</span>
+          </div>
           <div class="card-tags">
             <span class="card-tag">Python</span><span class="card-tag">AI/ML</span>
           </div>
-          <a class="card-link" href="#">View →</a>
+          <a class="card-link" href="#">
+            <span data-zh>查看作品 →</span>
+            <span data-en>View →</span>
+          </a>
         </div>
 
         <div class="project-card fade-in" style="transition-delay:.2s">
           <span class="card-num">03</span>
           <div class="card-icon" aria-hidden="true">📊</div>
-          <div class="card-title">作品名稱 C</div>
-          <div class="card-desc">第三個作品介紹。</div>
+          <div class="card-title">
+            <span data-zh>作品名稱 C</span>
+            <span data-en>Project Name C</span>
+          </div>
+          <div class="card-desc">
+            <span data-zh>第三個作品介紹。</span>
+            <span data-en>Description for the third project.</span>
+          </div>
           <div class="card-tags">
             <span class="card-tag">Vue.js</span><span class="card-tag">D3.js</span>
           </div>
-          <a class="card-link" href="#">View →</a>
+          <a class="card-link" href="#">
+            <span data-zh>查看作品 →</span>
+            <span data-en>View →</span>
+          </a>
         </div>
       </div>
     </div>
@@ -1308,6 +1462,29 @@
     if (window.scrollY === 0) {
       document.querySelectorAll('#about .fade-in').forEach(el => el.classList.add('visible'));
     }
+    /* ── Language Switcher Logic ── */
+    const langBtns = document.querySelectorAll('[data-lang-set]');
+    const htmlEl = document.documentElement;
+
+    function setLanguage(lang) {
+      htmlEl.setAttribute('lang', lang);
+      localStorage.setItem('preferred-lang', lang);
+
+      langBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang-set') === lang);
+      });
+    }
+
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang-set');
+        setLanguage(lang);
+      });
+    });
+
+    // Init language
+    const savedLang = localStorage.getItem('preferred-lang') || 'zh-TW';
+    setLanguage(savedLang);
   </script>
 </body>
 
