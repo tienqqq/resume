@@ -1209,7 +1209,7 @@
         if (!transitioning && mainContent) {
           deltaAccum = 0;
           mainContent.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
-          mainContent.style.transform  = 'translateY(0)';
+          mainContent.style.transform  = `translateY(${baseOffset}px)`;
         }
       }, 150);
 
