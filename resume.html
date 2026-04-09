@@ -272,14 +272,6 @@
       transform: translateY(0);
     }
 
-    /* ── Main content container for peaking ── */
-    #main-content {
-      width: 100%;
-      position: relative;
-      transition: transform var(--t-slow) var(--ease-out);
-      will-change: transform;
-    }
-
     /* ═══════════════════════════════
        PAGE 1 — ABOUT
     ═══════════════════════════════ */
@@ -1163,30 +1155,9 @@
     let current = 0;
     let baseOffset = 0; // 追蹤基礎位移座標
 
-    /* ── Sync active navigation + animations ── */
-    function updateActiveState(idx) {
-      // 1. Update Navigation
-      dots.forEach((d, i)     => d.classList.toggle('active', i === idx));
-      navLinks.forEach((l, i) => l.classList.toggle('active', i === idx));
-
-      // 2. Control Animations (Fade-in)
-      sections.forEach((sec, i) => {
-        const fadeEls = sec.querySelectorAll('.fade-in');
-        if (i === idx) {
-          // 抵達時：加入 visible
-          fadeEls.forEach(el => el.classList.add('visible'));
-        } else {
-          // 離開時：移除 visible，確保下次進入再彈一次
-          fadeEls.forEach(el => el.classList.remove('visible'));
-        }
-      });
-    }
-
-    /* ── Navigate to section idx ── */
     /* ── Navigate to section idx ── */
     function goTo(idx) {
-      if (idx < 0 || idx >= sectionIds.length || transitioning) return;
-      
+      if (idx < 0 || idx >= sectionIds.length) return;
       const targetEl = document.getElementById(sectionIds[idx]);
       if (targetEl) {
         if (isDesktop() && mainContent) {
@@ -1237,15 +1208,15 @@
       resetTimer = setTimeout(() => {
         if (!transitioning && mainContent) {
           deltaAccum = 0;
-          mainContent.style.transition = 'transform 0.5s var(--ease-out)';
-          mainContent.style.transform  = `translateY(-${current * 100}vh)`;
+          mainContent.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          mainContent.style.transform  = 'translateY(0)';
         }
       }, 150);
 
       deltaAccum += e.deltaY;
 
-      const maxPeek = 30;
-      const peek    = Math.max(Math.min(-deltaAccum * 0.08, maxPeek), -maxPeek);
+      const maxPeek = 36;
+      const peek    = Math.max(Math.min(-deltaAccum * 0.1, maxPeek), -maxPeek);
 
       if (!transitioning && mainContent) {
         mainContent.style.transition = 'none';
@@ -1262,6 +1233,7 @@
           transitioning = true;
 
           goTo(nextIdx);
+          setTimeout(() => { transitioning = false; }, 900);
         } else {
           deltaAccum = 0;
           if (mainContent) {
@@ -1275,18 +1247,22 @@
     /* ── Intersection Observer — sync nav + fade-in ── */
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        const fadeEls = entry.target.querySelectorAll('.fade-in');
+
         if (entry.isIntersecting) {
           const id  = entry.target.id;
           const idx = sectionIds.indexOf(id);
-          
-          // 手機版依賴觀察者切換狀態，桌面版已由 goTo 手動接管
-          if (!isDesktop()) {
-            current = idx;
-            updateActiveState(idx);
-          }
+          current   = idx;
+
+          dots.forEach((d, i)     => d.classList.toggle('active', i === idx));
+          navLinks.forEach((l, i) => l.classList.toggle('active', i === idx));
+
+          fadeEls.forEach(el => el.classList.add('visible'));
+        } else {
+          fadeEls.forEach(el => el.classList.remove('visible'));
         }
       });
-    }, { root: null, threshold: 0.4, rootMargin: '0px' });
+    }, { root: null, threshold: 0.8, rootMargin: '0px' });
 
     sections.forEach(s => observer.observe(s));
 
@@ -1311,8 +1287,10 @@
       }
     });
 
-    /* ── Initial load ── */
-    updateActiveState(0);
+    /* ── Initial fade-in for #about ── */
+    if (window.scrollY === 0) {
+      document.querySelectorAll('#about .fade-in').forEach(el => el.classList.add('visible'));
+    }
 
     /* ── Language Switcher ── */
     const langBtns      = document.querySelectorAll('[data-lang-set]');
