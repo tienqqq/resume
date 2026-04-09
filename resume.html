@@ -272,6 +272,12 @@
       transform: translateY(0);
     }
 
+    /* ── Main content container for peaking ── */
+    #main-content {
+      width: 100%;
+      position: relative;
+    }
+
     /* ═══════════════════════════════
        PAGE 1 — ABOUT
     ═══════════════════════════════ */
@@ -1156,14 +1162,24 @@
 
     /* ── Navigate to section idx ── */
     function goTo(idx) {
-      if (idx < 0 || idx >= sectionIds.length) return;
+      if (idx < 0 || idx >= sectionIds.length || transitioning) return;
+      
       const targetEl = document.getElementById(sectionIds[idx]);
       if (targetEl) {
+        transitioning = true;
+        
         if (mainContent) {
-          mainContent.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          // 瞬間歸位，避免干擾 scrollIntoView 計算
+          mainContent.style.transition = 'none';
           mainContent.style.transform  = 'translateY(0)';
         }
+
         targetEl.scrollIntoView({ behavior: 'smooth' });
+        
+        // 使用 timeout 釋放狀態，對應 CSS 轉場時間
+        setTimeout(() => {
+          transitioning = false;
+        }, 800);
       }
     }
 
@@ -1223,15 +1239,8 @@
 
         if (nextIdx >= 0 && nextIdx < sectionIds.length) {
           deltaAccum    = 0;
-          transitioning = true;
-
-          if (mainContent) {
-            mainContent.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
-            mainContent.style.transform  = 'translateY(0)';
-          }
-
+          // 此處不再手動處理 mainContent transform，完全交由 goTo 處理
           goTo(nextIdx);
-          setTimeout(() => { transitioning = false; }, 900);
         } else {
           deltaAccum = 0;
           if (mainContent) {
