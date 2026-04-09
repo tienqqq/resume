@@ -1153,17 +1153,23 @@
     const navLinks    = document.querySelectorAll('.nav-links a');
 
     let current = 0;
+    let baseOffset = 0; // 追蹤基礎位移座標
 
     /* ── Navigate to section idx ── */
     function goTo(idx) {
       if (idx < 0 || idx >= sectionIds.length) return;
       const targetEl = document.getElementById(sectionIds[idx]);
       if (targetEl) {
-        if (mainContent) {
-          mainContent.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
-          mainContent.style.transform  = 'translateY(0)';
+        if (isDesktop() && mainContent) {
+          // 使用 Transform 物理位移，這是最精確的定格方式
+          baseOffset = -targetEl.offsetTop;
+          mainContent.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          mainContent.style.transform  = `translateY(${baseOffset}px)`;
+        } else {
+          // 行動端維持原生捲動
+          targetEl.scrollIntoView({ behavior: 'smooth' });
         }
-        targetEl.scrollIntoView({ behavior: 'smooth' });
+        current = idx;
       }
     }
 
@@ -1214,7 +1220,8 @@
 
       if (!transitioning && mainContent) {
         mainContent.style.transition = 'none';
-        mainContent.style.transform  = `translateY(${peek}px)`;
+        // 預覽偏移必須建立在基礎位移之上
+        mainContent.style.transform  = `translateY(${baseOffset + peek}px)`;
       }
 
       if (Math.abs(deltaAccum) >= WHEEL_THRESHOLD) {
@@ -1225,18 +1232,13 @@
           deltaAccum    = 0;
           transitioning = true;
 
-          if (mainContent) {
-            mainContent.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
-            mainContent.style.transform  = 'translateY(0)';
-          }
-
           goTo(nextIdx);
           setTimeout(() => { transitioning = false; }, 900);
         } else {
           deltaAccum = 0;
           if (mainContent) {
             mainContent.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
-            mainContent.style.transform  = 'translateY(0)';
+            mainContent.style.transform  = `translateY(${baseOffset}px)`;
           }
         }
       }
@@ -1263,6 +1265,17 @@
     }, { root: null, threshold: 0.8, rootMargin: '0px' });
 
     sections.forEach(s => observer.observe(s));
+
+    /* ── Handle Resize ── */
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (isDesktop()) {
+          goTo(current);
+        }
+      }, 200);
+    });
 
     /* ── Keyboard navigation ── */
     window.addEventListener('keydown', e => {
@@ -1317,6 +1330,17 @@
 
     const savedLang = localStorage.getItem('preferred-lang') || 'zh-TW';
     setLanguage(savedLang, true);
+
+    // 初始化定位與座標同步
+    window.addEventListener('load', () => {
+      const hash = window.location.hash.slice(1);
+      const idx = sectionIds.indexOf(hash);
+      if (idx !== -1) {
+        goTo(idx);
+      } else {
+        goTo(current);
+      }
+    });
   </script>
 </body>
 
