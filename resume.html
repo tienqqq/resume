@@ -6,8 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resume</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Caveat:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap"
     rel="stylesheet">
   <style>
     *,
@@ -19,92 +20,68 @@
     }
 
     :root {
-      --bg: #FFFBEB;
-      --bg2: #FFF3CD;
-      --surface: #FFFFFF;
-      --border: #1A1A1A;
-      --border-sub: rgba(0, 0, 0, 0.13);
-      --amber: #F59E0B;
-      --pink: #EC4899;
-      --text: #1A1A1A;
-      --muted: #4A4A4A;
-      --subtle: #9CA3AF;
-      --sh: 4px 4px 0 #1A1A1A;
-      --sh-sm: 3px 3px 0 #1A1A1A;
-      --sh-lg: 6px 6px 0 #1A1A1A;
-      --r-card: 12px 4px 14px 6px / 6px 14px 4px 12px;
-      --r-tag: 18px 4px 16px 6px / 4px 18px 6px 16px;
-      --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      --nav-h: 60px;
-      /*
-     * Timeline geometry — all values derived from --tl-pad:
-     *   padding-left on .timeline = 2.6rem = 41.6px (at 16px root)
-     *   vertical line left:  9px
-     *   dot (10×10) left: calc(-2.6rem + 4px) → left-edge 4px, center 9px ✓
-     *   date label  left: calc(-2.6rem + 17px) → 3px gap right of dot ✓
-     */
-      --tl-pad: 2.6rem;
-      --tl-line-x: 9px;
-      --tl-dot-off: calc(-2.6rem + 4px);
-      --tl-lbl-off: calc(-2.6rem + 17px);
+      /* ── S19 Luxury Editorial Tokens ── */
+      --bg:       #FDFCF0;
+      --bg2:      #F5F3E6;
+      --surface:  #FFFFFF;
+      --text:     #111111;
+      --muted:    #555555;
+      --subtle:   #999999;
+      --accent:   #C9A84C;  /* warm gold */
+      --border:       rgba(17, 17, 17, 0.12);
+      --border-em:    #111111;
+
+      /* ── Typography ── */
+      --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+      --font-sans:  'Inter', 'Microsoft JhengHei', '微軟正黑體', 'Noto Sans TC', sans-serif;
+
+      /* ── Motion ── */
+      --ease-out:    cubic-bezier(0.25, 0.1, 0.25, 1);
+      --t-slow:      0.8s;
+      --t-base:      0.45s;
+
+      /* ── Layout ── */
+      --nav-h: 64px;
+      --tl-pad: 3rem;
     }
 
-    /* ── Body / Root ── */
+    /* ── Reset ── */
     html,
     body {
       height: 100%;
       overflow: hidden;
-      /* 改為隱藏，由 JS 控制 */
     }
 
     body {
-      font-family: 'Microsoft JhengHei', '微軟正黑體', 'Noto Sans TC', sans-serif;
+      font-family: var(--font-sans);
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
     }
 
     /* ── Language Visibility ── */
-    html[lang="zh-TW"] [data-en] {
-      display: none !important;
-    }
-
-    html[lang="en"] [data-zh] {
-      display: none !important;
-    }
+    html[lang="zh-TW"] [data-en] { display: none !important; }
+    html[lang="en"]    [data-zh] { display: none !important; }
 
     /* ═══════════════════════════════
-     SECTION — fade mode (desktop)
-  ═══════════════════════════════ */
+       SECTION
+    ═══════════════════════════════ */
     .section {
       position: relative;
       min-height: 100vh;
       display: flex;
       align-items: safe center;
       justify-content: center;
-      padding: calc(var(--nav-h) + 1.75rem) 4rem 2.5rem;
-
-      /* 隱藏捲軸但保留功能 */
+      padding: calc(var(--nav-h) + 2.5rem) 5rem 3rem;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
 
-    .section::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* ── Dot Grid ── */
-    .dot-grid {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg width='36' height='36' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='18' cy='18' r='1.2' fill='%231A1A1A' opacity='0.07'/%3E%3C/svg%3E");
-      background-size: 36px 36px;
-    }
+    .section::-webkit-scrollbar { display: none; }
 
     /* ═══════════════════════════════
-     TOP NAV
-  ═══════════════════════════════ */
+       TOP NAV
+    ═══════════════════════════════ */
     .top-nav {
       position: fixed;
       top: 0;
@@ -114,35 +91,48 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 3rem;
-      background: rgba(255, 251, 235, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 2px solid var(--border);
+      padding: 0 5rem;
+      background: rgba(253, 252, 240, 0.96);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 0.5px solid var(--border-em);
       z-index: 200;
     }
 
     .nav-logo {
-      font-family: 'Indie Flower', 'Caveat', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: 1.25rem;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
       color: var(--text);
+      text-transform: uppercase;
       display: flex;
       align-items: center;
-      gap: .35rem;
+      gap: 0.6rem;
+    }
+
+    .nav-logo-accent {
+      width: 20px;
+      height: 0.5px;
+      background: var(--accent);
+      flex-shrink: 0;
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.75rem;
       list-style: none;
     }
 
     .nav-links a {
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: 1rem;
-      color: var(--muted);
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--subtle);
       text-decoration: none;
-      transition: color .2s;
+      text-transform: uppercase;
+      transition: color var(--t-base) var(--ease-out);
       position: relative;
       padding-bottom: 2px;
     }
@@ -150,332 +140,246 @@
     .nav-links a::after {
       content: '';
       position: absolute;
-      bottom: -2px;
+      bottom: -1px;
       left: 0;
       right: 0;
-      height: 2.5px;
-      background: var(--amber);
-      border-radius: 2px;
+      height: 0.5px;
+      background: var(--accent);
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform .3s var(--bounce);
+      transition: transform var(--t-base) var(--ease-out);
     }
 
     .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--text);
-    }
+    .nav-links a.active { color: var(--text); }
 
     .nav-links a:hover::after,
-    .nav-links a.active::after {
-      transform: scaleX(1);
-    }
+    .nav-links a.active::after { transform: scaleX(1); }
 
     /* ── Language Switcher ── */
     .lang-switcher {
       display: flex;
       align-items: center;
-      background: var(--surface);
-      border: 2px solid var(--border);
-      border-radius: 9px 12px 6px 14px / 12px 8px 13px 7px;
-      padding: 3px;
-      margin-left: 1.5rem;
-      box-shadow: 2px 2px 0 var(--border);
+      border: 0.5px solid var(--border-em);
+      padding: 2px;
+      margin-left: 2.5rem;
       position: relative;
-      z-index: 10;
     }
 
     .lang-indicator {
       position: absolute;
-      top: 3px;
-      left: 3px;
-      height: calc(100% - 6px);
-      background: var(--amber);
-      border: 1.5px solid var(--border);
-      border-radius: 11px 4px 10px 5px / 4px 11px 5px 10px;
-      /* Doodle Shape */
-      box-shadow: 1.5px 1.5px 0 var(--border);
-      transition: all 0.4s var(--bounce);
+      top: 2px;
+      left: 2px;
+      height: calc(100% - 4px);
+      background: var(--text);
+      transition: all var(--t-base) var(--ease-out);
       z-index: 0;
     }
 
     .lang-btn {
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: 0.82rem;
-      padding: 5px 12px;
+      font-family: var(--font-sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      padding: 5px 13px;
       border: none;
       background: transparent;
       color: var(--muted);
       cursor: pointer;
       position: relative;
       z-index: 1;
-      transition: color 0.3s;
-      line-height: 1;
+      transition: color var(--t-base) var(--ease-out);
+      text-transform: uppercase;
     }
 
-    .lang-btn.active {
-      color: var(--text);
-      font-weight: 600;
-    }
+    .lang-btn.active { color: var(--bg); }
+    .lang-btn:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
 
-    .lang-btn:hover:not(.active) {
-      color: var(--amber);
-      transform: translateY(-1px);
-    }
-
-    @media (max-width: 600px) {
-      .lang-switcher {
-        margin-left: 0.5rem;
-        padding: 1px;
-      }
-
-      .lang-btn {
-        padding: 3px 6px;
-        font-size: 0.7rem;
-      }
-    }
-
-    /* ── Side Dots ── */
+    /* ── Side Indicator Dashes ── */
     .nav-dots {
       position: fixed;
-      right: 1.5rem;
+      right: 2rem;
       top: 50%;
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: .7rem;
+      gap: 0.6rem;
       z-index: 200;
     }
 
     .dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      background: var(--surface);
+      width: 16px;
+      height: 0.5px;
+      background: var(--subtle);
       cursor: pointer;
-      transition: all .3s var(--bounce);
+      transition: width var(--t-base) var(--ease-out), background var(--t-base) var(--ease-out);
     }
 
     .dot.active {
-      background: var(--amber);
-      border-color: var(--amber);
-      transform: scale(1.35);
-      box-shadow: 2px 2px 0 var(--border);
+      width: 28px;
+      background: var(--text);
     }
 
     .dot:focus-visible {
-      outline: 2px solid var(--amber);
-      outline-offset: 3px;
+      outline: 1px solid var(--accent);
+      outline-offset: 4px;
     }
 
+    /* ── Section Counter ── */
     .section-num {
       position: absolute;
-      bottom: 1.5rem;
-      right: 3rem;
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .78rem;
+      bottom: 2rem;
+      right: 5rem;
+      font-family: var(--font-sans);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
       color: var(--subtle);
+      text-transform: uppercase;
     }
 
+    /* ── Scroll Hint ── */
     .scroll-hint {
       position: absolute;
-      bottom: 1.5rem;
+      bottom: 2rem;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: .2rem;
+      gap: 0.5rem;
       color: var(--subtle);
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .8rem;
-      animation: bounce-hint 2.2s ease-in-out infinite;
+      font-family: var(--font-sans);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      animation: hint-pulse 3.5s ease-in-out infinite;
     }
 
-    @keyframes bounce-hint {
-
-      0%,
-      100% {
-        opacity: .45;
-        transform: translateX(-50%) translateY(0);
-      }
-
-      50% {
-        opacity: .9;
-        transform: translateX(-50%) translateY(-7px);
-      }
+    @keyframes hint-pulse {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 0.75; }
     }
 
-    /* ── Fade-in (bouncy) ── */
+    /* ── Fade In — slow, graceful ── */
     .fade-in {
       opacity: 0;
-      transform: translateY(20px) scale(.97);
-      transition: opacity .5s ease, transform .55s var(--bounce);
+      transform: translateY(18px);
+      transition: opacity var(--t-slow) var(--ease-out),
+                  transform var(--t-slow) var(--ease-out);
     }
 
     .fade-in.visible {
       opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    /* ── Deco SVGs ── */
-    .deco {
-      position: absolute;
-      pointer-events: none;
-      opacity: .55;
+      transform: translateY(0);
     }
 
     /* ═══════════════════════════════
-     PAGE 1 — ABOUT
-  ═══════════════════════════════ */
-    #about {
-      background: var(--bg);
-    }
+       PAGE 1 — ABOUT
+    ═══════════════════════════════ */
+    #about { background: var(--bg); }
 
     .about-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      max-width: 1040px;
+      gap: 6rem;
+      max-width: 1100px;
       width: 100%;
       position: relative;
       z-index: 2;
-      margin: auto 0;
-      /* 智慧置中 */
     }
 
-    .about-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
+    .about-left,
     .about-right {
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
-    .avatar-wrap {
-      position: relative;
-      width: 84px;
-      height: 84px;
-      margin-bottom: 1.6rem;
-    }
-
-    .avatar-circle {
-      width: 84px;
-      height: 84px;
-      border-radius: 50%;
-      background: var(--bg2);
-      border: 3px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.1rem;
-      box-shadow: var(--sh-sm);
-      position: relative;
-      z-index: 1;
-    }
-
-    .avatar-ring {
-      position: absolute;
-      inset: -7px;
-      border: 2.5px dashed var(--amber);
-      border-radius: 50%;
-      animation: spin-slow 14s linear infinite;
-    }
-
-    @keyframes spin-slow {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
+    /* Eyebrow */
     .eyebrow {
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .9rem;
-      color: var(--amber);
-      margin-bottom: .4rem;
       display: flex;
       align-items: center;
-      gap: .35rem;
+      gap: 0.7rem;
+      font-family: var(--font-sans);
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.75rem;
     }
 
+    .eyebrow-line {
+      display: block;
+      width: 22px;
+      height: 0.5px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Name */
     .name {
-      font-family: 'Indie Flower', 'Caveat', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-      line-height: 1.1;
-      margin-bottom: 1rem;
+      font-family: var(--font-serif);
+      font-size: clamp(3.2rem, 6vw, 5.2rem);
+      font-weight: 400;
+      line-height: 1.02;
+      letter-spacing: 0.025em;
       color: var(--text);
+      margin-bottom: 1.75rem;
     }
 
-    .name-hl {
-      position: relative;
-      display: inline-block;
+    .name-italic {
+      font-style: italic;
+      color: var(--accent);
     }
 
-    .name-hl::after {
-      content: '';
-      position: absolute;
-      bottom: 3px;
-      left: 0;
-      right: 0;
-      height: 9px;
-      background: var(--amber);
-      opacity: .35;
-      z-index: -1;
-      border-radius: 3px;
-    }
-
+    /* Tagline */
     .tagline {
-      font-size: .88rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 300;
       color: var(--muted);
-      max-width: 310px;
-      margin-bottom: 1.5rem;
-      line-height: 1.85;
+      max-width: 340px;
+      line-height: 1.95;
+      margin-bottom: 2rem;
     }
 
+    /* Bio pull-quote */
     .bio-box {
-      background: var(--surface);
-      border: 2px solid var(--border);
-      border-radius: var(--r-card);
-      padding: 1rem 1.25rem 1rem 1.5rem;
-      font-size: .83rem;
+      padding: 1.25rem 1.5rem;
+      border-left: 0.5px solid var(--accent);
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-style: italic;
+      font-weight: 300;
       color: var(--muted);
       line-height: 1.9;
-      box-shadow: var(--sh-sm);
-      position: relative;
     }
 
-    .bio-box::before {
-      content: '"';
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: 3.2rem;
-      line-height: 1;
-      color: var(--amber);
-      opacity: .3;
-      position: absolute;
-      top: -.55rem;
-      left: .5rem;
+    /* Divider */
+    .rule {
+      width: 100%;
+      height: 0.5px;
+      background: var(--border);
+      margin: 1.5rem 0;
     }
 
+    /* Skills section */
     .skills-label {
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .88rem;
-      color: var(--muted);
-      padding-bottom: .6rem;
-      margin-bottom: 1.25rem;
-      border-bottom: 2px dashed var(--border-sub);
       display: flex;
       align-items: center;
-      gap: .45rem;
+      gap: 0.75rem;
+      font-family: var(--font-sans);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: var(--subtle);
+      text-transform: uppercase;
+      margin-bottom: 1.75rem;
     }
 
-    .skills-label::before {
-      content: '✦';
-      color: var(--amber);
+    .skills-label::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
     }
 
     .skill-group {
@@ -483,396 +387,343 @@
     }
 
     .skill-group-label {
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .82rem;
-      color: var(--pink);
-      margin-bottom: .5rem;
-      display: flex;
-      align-items: center;
-      gap: .3rem;
-    }
-
-    .skill-group-label::before {
-      content: '▸';
+      font-family: var(--font-sans);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
     }
 
     .skill-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: .45rem;
+      gap: 0.4rem;
     }
 
     .tag {
-      padding: .25rem .75rem;
-      border: 2px solid var(--border);
-      border-radius: var(--r-tag);
-      font-size: .75rem;
+      padding: 0.28rem 0.8rem;
+      border: 0.5px solid var(--border-em);
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
       color: var(--text);
-      background: var(--surface);
-      box-shadow: var(--sh-sm);
-      transition: transform .25s var(--bounce), background .2s, box-shadow .2s;
+      background: transparent;
+      transition: background var(--t-base) var(--ease-out),
+                  color var(--t-base) var(--ease-out);
       cursor: default;
     }
 
     .tag:hover {
-      background: var(--amber);
-      transform: translateY(-3px) rotate(-1deg);
-      box-shadow: var(--sh);
+      background: var(--text);
+      color: var(--bg);
     }
 
     /* ═══════════════════════════════
-     PAGE 2 — EXPERIENCE
-  ═══════════════════════════════ */
-    #experience {
-      background: #FFF9F0;
-    }
+       PAGE 2 — EXPERIENCE
+    ═══════════════════════════════ */
+    #experience { background: var(--bg); }
 
     .exp-layout {
-      max-width: 820px;
+      max-width: 840px;
       width: 100%;
       position: relative;
       z-index: 2;
-      margin: auto 0;
-      /* 智慧置中 */
     }
 
+    /* Section headings */
     .page-heading {
-      font-family: 'Indie Flower', 'Caveat', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 400;
+      letter-spacing: 0.03em;
       color: var(--text);
-      margin-bottom: 1.5rem;
+      margin-bottom: 3rem;
       display: flex;
-      align-items: center;
-      gap: .9rem;
+      align-items: baseline;
+      gap: 1.25rem;
     }
 
     .page-heading .hline {
       flex: 1;
-      height: 2px;
-      background: repeating-linear-gradient(90deg, var(--border) 0, var(--border) 5px, transparent 5px, transparent 11px);
-      opacity: .25;
+      height: 0.5px;
+      background: var(--border-em);
+      opacity: 0.18;
+      align-self: center;
     }
 
-    /* ────────────────────────────────
-     TIMELINE
-     Geometry (16px root):
-       --tl-pad  = 2.6rem = 41.6px
-       line      left: 9px
-       dot 10×10 left: calc(-2.6rem + 4px)  → center = 41.6-37.6+5 = 9px ✓
-       label     left: calc(-2.6rem + 17px) → 3px gap after dot ✓
-  ──────────────────────────────── */
+    .heading-num {
+      font-family: var(--font-sans);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: var(--subtle);
+      align-self: center;
+    }
+
+    /* Timeline */
     .timeline {
       position: relative;
       padding-left: var(--tl-pad);
     }
 
-    /* Vertical dashed line */
     .timeline::before {
       content: '';
       position: absolute;
-      left: var(--tl-line-x);
-      top: 6px;
-      bottom: 6px;
-      width: 2px;
-      background: repeating-linear-gradient(180deg, var(--border) 0, var(--border) 5px, transparent 5px, transparent 10px);
-      opacity: .35;
+      left: 0;
+      top: 10px;
+      bottom: 10px;
+      width: 0.5px;
+      background: var(--border-em);
+      opacity: 0.2;
     }
 
-    /* ── Card item (dot via ::before) ── */
     .timeline-item {
       position: relative;
-      margin-bottom: 1rem;
-      /* 拉大間距 */
-      padding: .85rem 1.2rem;
+      margin-bottom: 1.25rem;
+      padding: 1.5rem 1.75rem;
       background: var(--surface);
-      border: 2px solid var(--border);
-      border-radius: var(--r-card);
-      box-shadow: var(--sh);
-      transition: transform .3s var(--bounce), box-shadow .3s;
+      border: 0.5px solid var(--border);
+      transition: border-color var(--t-base) var(--ease-out);
       cursor: default;
     }
 
     .timeline-item:hover {
-      transform: translateY(-3px) rotate(.2deg);
-      box-shadow: var(--sh-lg);
+      border-color: var(--accent);
     }
 
-    /* Dot — center aligned with --tl-line-x */
+    /* Diamond marker */
     .timeline-item::before {
       content: '';
       position: absolute;
-      left: var(--tl-dot-off);
-      top: 1.1rem;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--amber);
-      border: 2px solid var(--border);
-      box-shadow: 2px 2px 0 var(--border);
-      z-index: 1;
+      left: calc(-1 * var(--tl-pad) - 4px);
+      top: 1.75rem;
+      width: 8px;
+      height: 8px;
+      background: var(--bg);
+      border: 0.5px solid var(--border-em);
+      transform: rotate(45deg);
     }
 
-    /* ── Date-only milestone node ── */
-    .tl-node {
-      position: relative;
-      height: 26px;
-      display: flex;
-      align-items: center;
-      margin-bottom: .3rem;
-    }
-
-    /* Dot */
-    .tl-node::before {
-      content: '';
-      position: absolute;
-      left: var(--tl-dot-off);
-      top: 50%;
-      transform: translateY(-50%);
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--surface);
-      border: 2px solid var(--border);
-      box-shadow: 2px 2px 0 var(--border);
-      z-index: 1;
-    }
-
-    /* Date label */
-    .tl-node::after {
-      content: attr(data-date);
-      position: absolute;
-      left: var(--tl-lbl-off);
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .72rem;
-      color: var(--subtle);
-      white-space: nowrap;
-    }
-
-    /* "現在" node */
-    .tl-node-now::before {
-      background: var(--amber);
-      width: 12px;
-      height: 12px;
-      left: calc(var(--tl-dot-off) - 1px);
-      box-shadow: 2px 2px 0 var(--border), 0 0 0 3px rgba(245, 158, 11, .22);
-    }
-
-    .tl-node-now::after {
-      color: var(--amber);
-      font-size: .78rem;
-    }
-
-    /* ── Gap bar ── */
-    .tl-gap {
-      position: relative;
-      height: 22px;
-      margin: .5rem 0 1rem;
-      /* 拉大間距 */
-      display: flex;
-      align-items: center;
-    }
-
-    .tl-gap::after {
-      content: attr(data-label);
-      position: absolute;
-      left: var(--tl-lbl-off);
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .68rem;
-      color: var(--subtle);
-      opacity: .6;
-      white-space: nowrap;
-    }
-
-    /* Card internals */
     .item-meta {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: .35rem;
+      margin-bottom: 0.6rem;
       flex-wrap: wrap;
-      gap: .3rem;
+      gap: 0.4rem;
     }
 
     .item-type {
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .75rem;
-      color: var(--text);
-      background: var(--amber);
-      padding: .06rem .5rem;
-      border: 2px solid var(--border);
-      border-radius: 18px 4px 18px 4px / 4px 18px 4px 18px;
-      box-shadow: 2px 2px 0 var(--border);
+      font-family: var(--font-sans);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-transform: uppercase;
+      padding: 0.2rem 0.65rem;
+      border: 0.5px solid var(--accent);
     }
 
     .item-type.edu {
-      background: #bbf7d0;
+      color: var(--text);
+      border-color: var(--border-em);
     }
 
     .item-period {
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .75rem;
+      font-family: var(--font-sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
       color: var(--subtle);
     }
 
     .item-title {
-      font-size: .9rem;
-      font-weight: 500;
-      margin-bottom: .15rem;
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 0.2rem;
     }
 
     .item-org {
-      font-size: .76rem;
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
       color: var(--muted);
-      margin-bottom: .45rem;
+      margin-bottom: 0.7rem;
     }
 
     .item-desc {
-      font-size: .78rem;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
       color: var(--muted);
-      line-height: 1.75;
+      line-height: 1.85;
+    }
+
+    /* "Now" end node */
+    .tl-node-now {
+      position: relative;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      margin-top: 0.25rem;
+    }
+
+    .tl-node-now::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--tl-pad) - 5px);
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border: 0.5px solid var(--accent);
+    }
+
+    .tl-node-now::after {
+      content: attr(data-date);
+      font-family: var(--font-sans);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
     }
 
     /* ═══════════════════════════════
-     PAGE 3 — PORTFOLIO
-  ═══════════════════════════════ */
-    #portfolio {
-      background: var(--bg);
-    }
+       PAGE 3 — PORTFOLIO
+    ═══════════════════════════════ */
+    #portfolio { background: var(--bg); }
 
     .portfolio-layout {
-      max-width: 1040px;
+      max-width: 1100px;
       width: 100%;
       position: relative;
       z-index: 2;
-      margin: auto 0;
-      /* 智慧置中 */
     }
 
     .project-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-top: 1.5rem;
+      gap: 0;
+      margin-top: 2rem;
+      border: 0.5px solid var(--border);
     }
 
     .project-card {
-      background: var(--surface);
-      border: 2px solid var(--border);
-      border-radius: var(--r-card);
-      padding: 1.4rem;
+      background: transparent;
+      border-right: 0.5px solid var(--border);
+      padding: 2.25rem 2rem;
       position: relative;
       overflow: hidden;
-      box-shadow: var(--sh);
-      transition: transform .3s var(--bounce), box-shadow .3s;
+      transition: background var(--t-base) var(--ease-out);
       cursor: pointer;
     }
 
-    .project-card:hover {
-      transform: translateY(-6px) rotate(-.4deg);
-      box-shadow: var(--sh-lg);
-    }
+    .project-card:last-child { border-right: none; }
 
-    .project-card::after {
+    .project-card:hover { background: var(--surface); }
+
+    /* Top gold rule on hover */
+    .project-card::before {
       content: '';
       position: absolute;
       top: 0;
+      left: 0;
       right: 0;
-      width: 34px;
-      height: 34px;
-      background: var(--amber);
-      clip-path: polygon(100% 0, 0 0, 100% 100%);
-      opacity: .75;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--t-base) var(--ease-out);
     }
 
-    .project-card:nth-child(2)::after {
-      background: var(--pink);
-    }
-
-    .project-card:nth-child(3)::after {
-      background: #a78bfa;
-    }
+    .project-card:hover::before { transform: scaleX(1); }
 
     .card-num {
       display: block;
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .78rem;
+      font-family: var(--font-sans);
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
       color: var(--subtle);
-      margin-bottom: .6rem;
+      margin-bottom: 1.5rem;
     }
 
     .card-icon {
-      width: 40px;
-      height: 40px;
-      border: 2px solid var(--border);
-      border-radius: 10px 3px 10px 3px / 3px 10px 3px 10px;
-      background: var(--bg);
+      width: 32px;
+      height: 32px;
+      border: 0.5px solid var(--border-em);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
-      margin-bottom: .75rem;
-      box-shadow: 2px 2px 0 var(--border);
+      margin-bottom: 1.25rem;
+      color: var(--muted);
     }
 
     .card-title {
-      font-size: .9rem;
-      font-weight: 500;
-      margin-bottom: .35rem;
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 0.65rem;
     }
 
     .card-desc {
-      font-size: .76rem;
+      font-family: var(--font-sans);
+      font-size: 0.74rem;
       color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: .85rem;
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
     }
 
     .card-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: .3rem;
+      gap: 0.35rem;
+      margin-bottom: 1.75rem;
     }
 
     .card-tag {
-      font-size: .62rem;
-      padding: .1rem .42rem;
-      border: 1.5px solid var(--border);
-      border-radius: 10px 2px 10px 2px / 2px 10px 2px 10px;
+      font-family: var(--font-sans);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.55rem;
+      border: 0.5px solid var(--border);
       color: var(--muted);
-      background: var(--bg);
+      text-transform: uppercase;
     }
 
     .card-link {
-      position: absolute;
-      bottom: 1rem;
-      right: 1.1rem;
-      font-family: 'Indie Flower', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
-      font-size: .8rem;
-      color: var(--muted);
-      text-decoration: none;
-      opacity: 0;
-      transform: translateX(-5px);
-      transition: all .25s var(--bounce);
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: .25rem;
+      gap: 0.45rem;
+      font-family: var(--font-sans);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      border-bottom: 0.5px solid var(--border-em);
+      padding-bottom: 1px;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity var(--t-base) var(--ease-out),
+                  transform var(--t-base) var(--ease-out),
+                  color var(--t-base) var(--ease-out),
+                  border-color var(--t-base) var(--ease-out);
     }
 
     .project-card:hover .card-link {
       opacity: 1;
-      transform: translateX(0);
-      color: var(--amber);
+      transform: translateY(0);
+      color: var(--accent);
+      border-color: var(--accent);
     }
 
     /* ═══════════════════════════════
-     MOBILE — revert to normal scroll
-  ═══════════════════════════════ */
+       MOBILE
+    ═══════════════════════════════ */
     @media (max-width: 767px) {
-
       html,
       body {
         height: auto;
@@ -885,59 +736,55 @@
         pointer-events: auto;
         height: auto;
         min-height: 100dvh;
-        padding: calc(var(--nav-h) + 1.5rem) 1.25rem 3rem;
+        padding: calc(var(--nav-h) + 1.5rem) 1.5rem 3rem;
         align-items: flex-start;
-        z-index: auto;
       }
+
+      .top-nav { padding: 0 1.5rem; }
+      .section-num { right: 1.5rem; }
+      .nav-dots { display: none; }
+
+      .nav-links { gap: 1.5rem; }
 
       .about-layout {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
+        gap: 2.75rem;
       }
 
       .project-grid {
         grid-template-columns: 1fr;
+        border: 0.5px solid var(--border);
       }
 
-      .nav-dots {
-        display: none;
+      .project-card {
+        border-right: none;
+        border-bottom: 0.5px solid var(--border);
       }
 
-      .top-nav {
-        padding: 0 1.25rem;
-      }
-
-      .nav-links {
-        gap: 1rem;
-      }
-
-      .deco {
-        display: none;
-      }
+      .project-card:last-child { border-bottom: none; }
     }
 
     @media (min-width: 768px) and (max-width: 1024px) {
       .section {
-        padding-left: 2.5rem;
-        padding-right: 2.5rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
       }
 
-      .about-layout {
-        gap: 3rem;
-      }
+      .top-nav { padding: 0 3rem; }
+      .section-num { right: 3rem; }
 
-      .project-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
 
+      .project-card:nth-child(2) { border-right: none; }
       .project-card:last-child {
-        grid-column: 1/-1;
-        max-width: calc(50% - .5rem);
+        grid-column: 1 / -1;
+        border-right: none;
+        border-top: 0.5px solid var(--border);
+        max-width: 50%;
       }
     }
 
     @media (orientation: landscape) and (max-height: 500px) {
-
       html,
       body {
         height: auto;
@@ -950,50 +797,28 @@
         pointer-events: auto;
         height: auto;
         min-height: auto;
-        padding: calc(var(--nav-h) + 1rem) 2rem 2rem;
+        padding: calc(var(--nav-h) + 1rem) 3rem 2rem;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .fade-in {
-        transition: opacity .3s ease;
+        transition: opacity 0.3s ease;
         transform: none !important;
       }
 
-      .fade-in.visible {
-        transform: none !important;
-      }
-
-      .section {
-        transition: opacity .3s ease;
-      }
-
-      .tag:hover,
-      .project-card:hover,
-      .timeline-item:hover {
-        transform: none !important;
-      }
-
-      .avatar-ring {
-        animation: none;
-      }
-
-      .scroll-hint {
-        animation: none;
-      }
+      .fade-in.visible { transform: none !important; }
+      .scroll-hint { animation: none; }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- ═══ TOP NAV ═══ -->
   <nav class="top-nav">
     <div class="nav-logo">
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <path d="M3 15L12 4L15 7L6 16H3V15Z" stroke="#1A1A1A" stroke-width="1.5" fill="#F59E0B" stroke-linecap="round"
-          stroke-linejoin="round" />
-        <path d="M10.5 5.5L13.5 8.5" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" />
-      </svg>
+      <span class="nav-logo-accent" aria-hidden="true"></span>
       <span data-zh>你的名字</span>
       <span data-en>Your Name</span>
     </div>
@@ -1020,67 +845,45 @@
     </div>
   </nav>
 
+  <!-- ═══ SIDE INDICATORS ═══ -->
   <nav class="nav-dots" aria-label="頁面導航">
-    <div class="dot active" data-target="about" role="button" tabindex="0"></div>
-    <div class="dot" data-target="experience" role="button" tabindex="0"></div>
-    <div class="dot" data-target="portfolio" role="button" tabindex="0"></div>
+    <div class="dot active" data-target="about"      role="button" tabindex="0" aria-label="About"></div>
+    <div class="dot"        data-target="experience" role="button" tabindex="0" aria-label="Experience"></div>
+    <div class="dot"        data-target="portfolio"  role="button" tabindex="0" aria-label="Portfolio"></div>
   </nav>
 
   <main id="main-content">
+
     <!-- ═══════════════════ PAGE 1 — ABOUT ═══════════════════ -->
     <section class="section active" id="about">
-      <div class="dot-grid"></div>
-
-      <div class="deco" style="top:14%;right:7%;transform:rotate(12deg)">
-        <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
-          <path d="M19 3L22.5 13.5H34L25 20L28.5 31L19 24.5L9.5 31L13 20L4 13.5H15.5L19 3Z" stroke="#F59E0B"
-            stroke-width="2" fill="none" stroke-linejoin="round" />
-        </svg>
-      </div>
-      <div class="deco" style="top:28%;left:3%;transform:rotate(5deg)">
-        <svg width="54" height="22" viewBox="0 0 54 22" fill="none">
-          <path d="M2 11C8 4 14 18 20 11C26 4 32 18 38 11C44 4 50 14 52 11" stroke="#F59E0B" stroke-width="2"
-            stroke-linecap="round" opacity=".7" />
-        </svg>
-      </div>
-      <div class="deco" style="bottom:20%;left:5%;transform:rotate(-8deg)">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <circle cx="15" cy="15" r="12" stroke="#EC4899" stroke-width="2" />
-          <circle cx="15" cy="15" r="4" fill="#EC4899" opacity=".4" />
-        </svg>
-      </div>
 
       <div class="about-layout">
+        <!-- Left — identity -->
         <div class="about-left fade-in">
-          <div class="avatar-wrap">
-            <div class="avatar-ring" aria-hidden="true"></div>
-            <div class="avatar-circle" role="img" aria-label="個人照片">👤</div>
-          </div>
           <div class="eyebrow">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M2 7h10M8 3l4 4-4 4" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
+            <span class="eyebrow-line" aria-hidden="true"></span>
             <span data-zh>你好，我是</span>
             <span data-en>Hello, I'm</span>
           </div>
+
           <h1 class="name">
-            <span data-zh><span class="name-hl">你的</span><br>名字</span>
-            <span data-en><span class="name-hl">Your</span><br>Name Here</span>
+            <span data-zh>你的<br><span class="name-italic">名字</span></span>
+            <span data-en>Your<br><span class="name-italic">Name</span></span>
           </h1>
+
           <p class="tagline">
             <span data-zh>一段簡短有力的自我介紹，說明你是誰、你做什麼、你的熱情所在。</span>
-            <span data-en>A short and powerful self-introduction explaining who you are, what you do, and your
-              passion.</span>
+            <span data-en>A short and powerful self-introduction explaining who you are, what you do, and your passion.</span>
           </p>
+
           <div class="bio-box">
             <span data-zh>這裡放稍微詳細一點的介紹，例如你的背景、專長方向，或是一兩句讓人印象深刻的話。保持簡潔有力即可。</span>
-            <span data-en>Detailed introduction here, like your background, expertise, or a couple of impressive
-              sentences. Keep it concise and impactful.</span>
+            <span data-en>Detailed introduction here, like your background, expertise, or a couple of impressive sentences. Keep it concise and impactful.</span>
           </div>
         </div>
 
-        <div class="about-right fade-in" style="transition-delay:.15s">
+        <!-- Right — skills -->
+        <div class="about-right fade-in" style="transition-delay: 0.2s">
           <div class="skills-label">
             <span data-zh>技術技能</span>
             <span data-en>Technical Skills</span>
@@ -1092,28 +895,40 @@
               <span data-en>Frontend</span>
             </div>
             <div class="skill-tags">
-              <span class="tag">React</span><span class="tag">Vue.js</span>
-              <span class="tag">TypeScript</span><span class="tag">CSS / SASS</span>
+              <span class="tag">React</span>
+              <span class="tag">Vue.js</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">CSS / SASS</span>
             </div>
           </div>
+
+          <div class="rule"></div>
+
           <div class="skill-group">
             <div class="skill-group-label">
               <span data-zh>後端開發</span>
               <span data-en>Backend</span>
             </div>
             <div class="skill-tags">
-              <span class="tag">Node.js</span><span class="tag">Python</span>
-              <span class="tag">PostgreSQL</span><span class="tag">REST API</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">Python</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">REST API</span>
             </div>
           </div>
+
+          <div class="rule"></div>
+
           <div class="skill-group">
             <div class="skill-group-label">
               <span data-zh>工具與其他</span>
               <span data-en>Tools &amp; Others</span>
             </div>
             <div class="skill-tags">
-              <span class="tag">Git</span><span class="tag">Docker</span>
-              <span class="tag">Figma</span><span class="tag">Vercel</span>
+              <span class="tag">Git</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Figma</span>
+              <span class="tag">Vercel</span>
               <span class="tag">Supabase</span>
             </div>
           </div>
@@ -1121,56 +936,36 @@
       </div>
 
       <div class="scroll-hint" aria-hidden="true">
-        <span data-zh>向下滾動</span>
-        <span data-en>scroll</span>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M8 3v10M8 13L4 9M8 13l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-            stroke-linejoin="round" />
+        <!-- Thin vertical line -->
+        <svg width="1" height="28" viewBox="0 0 1 28" fill="none">
+          <line x1="0.5" y1="0" x2="0.5" y2="28" stroke="currentColor" stroke-width="0.5"/>
         </svg>
+        <span data-zh>滾動</span>
+        <span data-en>Scroll</span>
       </div>
-      <span class="section-num" aria-hidden="true">01 / 03</span>
+      <span class="section-num" aria-hidden="true">01 — 03</span>
     </section>
 
     <!-- ═══════════════════ PAGE 2 — EXPERIENCE ═══════════════════ -->
     <section class="section" id="experience">
-      <div class="dot-grid"></div>
-
-      <div class="deco" style="top:11%;right:6%;transform:rotate(-14deg)">
-        <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
-          <path d="M23 4L27 16H40L30 23.5L34 36L23 28.5L12 36L16 23.5L6 16H19L23 4Z" stroke="#F59E0B" stroke-width="2"
-            fill="#FFFBEB" stroke-linejoin="round" />
-        </svg>
-      </div>
-      <div class="deco" style="bottom:14%;right:7%;transform:rotate(9deg)">
-        <svg width="62" height="25" viewBox="0 0 62 25" fill="none">
-          <path d="M2 13C9 5 16 21 23 13C30 5 37 21 44 13C51 5 57 14 60 12" stroke="#EC4899" stroke-width="2"
-            stroke-linecap="round" opacity=".55" />
-        </svg>
-      </div>
 
       <div class="exp-layout">
         <h2 class="page-heading fade-in">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true" style="flex-shrink:0">
-            <rect x="2" y="10" width="24" height="15" rx="3" stroke="#1A1A1A" stroke-width="2" fill="none" />
-            <path d="M9 10V8a5 5 0 0 1 10 0v2" stroke="#1A1A1A" stroke-width="2" fill="none" stroke-linecap="round" />
-            <line x1="8" y1="16" x2="20" y2="16" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" />
-            <line x1="8" y1="20" x2="16" y2="20" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" />
-          </svg>
           <span data-zh>學經歷</span>
           <span data-en>Experience</span>
+          <span class="heading-num" aria-hidden="true">02</span>
           <div class="hline" aria-hidden="true"></div>
         </h2>
 
         <div class="timeline">
 
-          <!-- ● Dot 1 (2021/09) — 研究所 -->
           <div class="timeline-item fade-in">
             <div class="item-meta">
               <span class="item-type edu">
                 <span data-zh>研究所</span>
                 <span data-en>Graduate</span>
               </span>
-              <span class="item-period">2021/09 — 2023/07</span>
+              <span class="item-period">2021 / 09 — 2023 / 07</span>
             </div>
             <div class="item-title">
               <span data-zh>碩士學位名稱</span>
@@ -1182,19 +977,17 @@
             </div>
             <div class="item-desc">
               <span data-zh>研究方向或論文主題的簡短描述。說明你在這段期間學習了什麼、做了哪些研究、有哪些成果或發表。</span>
-              <span data-en>Short description of your research direction or thesis. Explain what you learned, research
-                conducted, and achievements.</span>
+              <span data-en>Short description of your research direction or thesis. Explain what you learned, research conducted, and achievements.</span>
             </div>
           </div>
 
-          <!-- ● Dot 3 (2024/04) — 第一份工作 -->
-          <div class="timeline-item fade-in" style="transition-delay:.1s">
+          <div class="timeline-item fade-in" style="transition-delay: 0.1s">
             <div class="item-meta">
               <span class="item-type">
                 <span data-zh>工作</span>
                 <span data-en>Work</span>
               </span>
-              <span class="item-period">2024/04 — <span data-zh>現在</span><span data-en>Present</span></span>
+              <span class="item-period">2024 / 04 — <span data-zh>現在</span><span data-en>Present</span></span>
             </div>
             <div class="item-title">
               <span data-zh>職稱 / Job Title</span>
@@ -1206,19 +999,17 @@
             </div>
             <div class="item-desc">
               <span data-zh>這份工作的主要職責與成果。用數字或具體事蹟來呈現更有說服力，例如「負責 XX 系統開發，提升效率 30%」。</span>
-              <span data-en>Main responsibilities and achievements. Use numbers to be more convincing, e.g.,
-                "Responsible for system development, improving efficiency by 30%."</span>
+              <span data-en>Main responsibilities and achievements. Use numbers to be more convincing, e.g., "Responsible for system development, improving efficiency by 30%."</span>
             </div>
           </div>
 
-          <!-- ● Dot 4 (2026/01) — 第二份工作 -->
-          <div class="timeline-item fade-in" style="transition-delay:.2s">
+          <div class="timeline-item fade-in" style="transition-delay: 0.2s">
             <div class="item-meta">
               <span class="item-type">
                 <span data-zh>工作</span>
                 <span data-en>Work</span>
               </span>
-              <span class="item-period">2026/01 — <span data-zh>現在</span><span data-en>Present</span></span>
+              <span class="item-period">2026 / 01 — <span data-zh>現在</span><span data-en>Present</span></span>
             </div>
             <div class="item-title">
               <span data-zh>第二份職稱</span>
@@ -1234,50 +1025,34 @@
             </div>
           </div>
 
-          <!-- ● Dot 5 (現在) — end marker -->
-          <div class="tl-node tl-node-now" data-date="NOW"></div>
+          <div class="tl-node-now" data-date="NOW"></div>
 
         </div>
       </div>
-      <span class="section-num" aria-hidden="true">02 / 03</span>
+      <span class="section-num" aria-hidden="true">02 — 03</span>
     </section>
 
     <!-- ═══════════════════ PAGE 3 — PORTFOLIO ═══════════════════ -->
     <section class="section" id="portfolio">
-      <div class="dot-grid"></div>
-
-      <div class="deco" style="top:13%;left:4%;transform:rotate(-10deg)">
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-          <path d="M20 4L23.5 14H34.5L26 20.5L29 31L20 24.5L11 31L14 20.5L5.5 14H16.5L20 4Z" stroke="#EC4899"
-            stroke-width="2" fill="none" stroke-linejoin="round" />
-        </svg>
-      </div>
-      <div class="deco" style="bottom:18%;right:5%;transform:rotate(7deg)">
-        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-          <circle cx="17" cy="17" r="13" stroke="#F59E0B" stroke-width="2" />
-          <line x1="10" y1="17" x2="24" y2="17" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" />
-          <line x1="17" y1="10" x2="17" y2="24" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" />
-        </svg>
-      </div>
 
       <div class="portfolio-layout">
         <h2 class="page-heading fade-in">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true" style="flex-shrink:0">
-            <rect x="2" y="5" width="24" height="19" rx="3" stroke="#1A1A1A" stroke-width="2" fill="none" />
-            <path d="M2 11h24" stroke="#1A1A1A" stroke-width="2" />
-            <circle cx="7" cy="8" r="1.5" fill="#F59E0B" />
-            <circle cx="12" cy="8" r="1.5" fill="#EC4899" />
-            <circle cx="17" cy="8" r="1.5" fill="#1A1A1A" opacity=".3" />
-          </svg>
           <span data-zh>作品集</span>
           <span data-en>Portfolio</span>
+          <span class="heading-num" aria-hidden="true">03</span>
           <div class="hline" aria-hidden="true"></div>
         </h2>
 
         <div class="project-grid">
+
           <div class="project-card fade-in">
             <span class="card-num">01</span>
-            <div class="card-icon" aria-hidden="true">🌐</div>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="1.5" y="1.5" width="13" height="13" stroke="currentColor" stroke-width="0.75"/>
+                <path d="M4 8h8M8 4v8" stroke="currentColor" stroke-width="0.75"/>
+              </svg>
+            </div>
             <div class="card-title">
               <span data-zh>作品名稱 A</span>
               <span data-en>Project Name A</span>
@@ -1287,18 +1062,27 @@
               <span data-en>Briefly explain what this project is, the problem it solved, and your specific role.</span>
             </div>
             <div class="card-tags">
-              <span class="card-tag">React</span><span class="card-tag">Node.js</span><span
-                class="card-tag">Supabase</span>
+              <span class="card-tag">React</span>
+              <span class="card-tag">Node.js</span>
+              <span class="card-tag">Supabase</span>
             </div>
             <a class="card-link" href="#">
-              <span data-zh>查看作品 →</span>
-              <span data-en>View →</span>
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </a>
           </div>
 
-          <div class="project-card fade-in" style="transition-delay:.1s">
+          <div class="project-card fade-in" style="transition-delay: 0.1s">
             <span class="card-num">02</span>
-            <div class="card-icon" aria-hidden="true">🤖</div>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="0.75"/>
+                <path d="M8 5v3l2 2" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/>
+              </svg>
+            </div>
             <div class="card-title">
               <span data-zh>作品名稱 B</span>
               <span data-en>Project Name B</span>
@@ -1308,17 +1092,26 @@
               <span data-en>Another brief description of a project, highlighting its most impressive aspects.</span>
             </div>
             <div class="card-tags">
-              <span class="card-tag">Python</span><span class="card-tag">AI/ML</span>
+              <span class="card-tag">Python</span>
+              <span class="card-tag">AI / ML</span>
             </div>
             <a class="card-link" href="#">
-              <span data-zh>查看作品 →</span>
-              <span data-en>View →</span>
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </a>
           </div>
 
-          <div class="project-card fade-in" style="transition-delay:.2s">
+          <div class="project-card fade-in" style="transition-delay: 0.2s">
             <span class="card-num">03</span>
-            <div class="card-icon" aria-hidden="true">📊</div>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="1.5" y="4.5" width="13" height="10" stroke="currentColor" stroke-width="0.75"/>
+                <path d="M1.5 7.5h13M5.5 4.5V3a2.5 2.5 0 015 0v1.5" stroke="currentColor" stroke-width="0.75"/>
+              </svg>
+            </div>
             <div class="card-title">
               <span data-zh>作品名稱 C</span>
               <span data-en>Project Name C</span>
@@ -1328,30 +1121,36 @@
               <span data-en>Description for the third project.</span>
             </div>
             <div class="card-tags">
-              <span class="card-tag">Vue.js</span><span class="card-tag">D3.js</span>
+              <span class="card-tag">Vue.js</span>
+              <span class="card-tag">D3.js</span>
             </div>
             <a class="card-link" href="#">
-              <span data-zh>查看作品 →</span>
-              <span data-en>View →</span>
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </a>
           </div>
+
         </div>
       </div>
-      <span class="section-num" aria-hidden="true">03 / 03</span>
+      <span class="section-num" aria-hidden="true">03 — 03</span>
     </section>
+
   </main>
 
   <script>
     /* ── Helpers ── */
-    const isDesktop = () => window.innerWidth >= 768 &&
-      !(window.innerWidth < 768) &&
-      !(window.matchMedia('(orientation:landscape) and (max-height:500px)').matches);
+    const isDesktop = () =>
+      window.innerWidth >= 768 &&
+      !window.matchMedia('(orientation:landscape) and (max-height:500px)').matches;
 
-    const sectionIds = ['about', 'experience', 'portfolio'];
+    const sectionIds  = ['about', 'experience', 'portfolio'];
     const mainContent = document.getElementById('main-content');
-    const sections = document.querySelectorAll('.section');
-    const dots = document.querySelectorAll('.dot');
-    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections    = document.querySelectorAll('.section');
+    const dots        = document.querySelectorAll('.dot');
+    const navLinks    = document.querySelectorAll('.nav-links a');
 
     let current = 0;
 
@@ -1360,10 +1159,9 @@
       if (idx < 0 || idx >= sectionIds.length) return;
       const targetEl = document.getElementById(sectionIds[idx]);
       if (targetEl) {
-        // 重置位移，確保定位準確
         if (mainContent) {
-          mainContent.style.transition = 'transform 0.4s ease';
-          mainContent.style.transform = 'translateY(0)';
+          mainContent.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          mainContent.style.transform  = 'translateY(0)';
         }
         targetEl.scrollIntoView({ behavior: 'smooth' });
       }
@@ -1384,128 +1182,109 @@
     navLinks.forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
-        const id = link.getAttribute('href').slice(1);
+        const id  = link.getAttribute('href').slice(1);
         const idx = sectionIds.indexOf(id);
         goTo(idx);
       });
     });
 
-    /* ── 滾動閥值控制 (由 JS 驅動垂直捲動) ── */
-    const WHEEL_THRESHOLD = 256; // <--- 修改這裡：數值越大，需要「多滾一點」才能換頁
-    let deltaAccum = 0;
-    let resetTimer = null;
+    /* ── Wheel scroll threshold ── */
+    const WHEEL_THRESHOLD = 256;
+    let deltaAccum   = 0;
+    let resetTimer   = null;
     let transitioning = false;
 
     window.addEventListener('wheel', e => {
-      // 僅在桌面版且非轉場中生效
       if (!isDesktop() || transitioning) return;
-
-      e.preventDefault(); // 攔截原生滾動
+      e.preventDefault();
 
       clearTimeout(resetTimer);
       resetTimer = setTimeout(() => {
         if (!transitioning && mainContent) {
           deltaAccum = 0;
-          mainContent.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
-          mainContent.style.transform = `translateY(0)`;
+          mainContent.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
+          mainContent.style.transform  = 'translateY(0)';
         }
       }, 150);
 
       deltaAccum += e.deltaY;
 
-      // 位移預覽 (Peeking)：讓使用者感覺到正在施力
-      const maxPeek = 60;
-      const peek = Math.max(Math.min(-deltaAccum * 0.15, maxPeek), -maxPeek);
+      const maxPeek = 36;
+      const peek    = Math.max(Math.min(-deltaAccum * 0.1, maxPeek), -maxPeek);
 
       if (!transitioning && mainContent) {
         mainContent.style.transition = 'none';
-        mainContent.style.transform = `translateY(${peek}px)`;
+        mainContent.style.transform  = `translateY(${peek}px)`;
       }
 
       if (Math.abs(deltaAccum) >= WHEEL_THRESHOLD) {
-        const dir = deltaAccum > 0 ? 1 : -1;
+        const dir     = deltaAccum > 0 ? 1 : -1;
         const nextIdx = current + dir;
 
         if (nextIdx >= 0 && nextIdx < sectionIds.length) {
-          deltaAccum = 0;
+          deltaAccum    = 0;
           transitioning = true;
 
-          // 恢復主容器位移並執行換頁
           if (mainContent) {
-            mainContent.style.transition = 'transform 0.4s ease';
-            mainContent.style.transform = `translateY(0)`;
+            mainContent.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            mainContent.style.transform  = 'translateY(0)';
           }
 
           goTo(nextIdx);
-
-          setTimeout(() => { transitioning = false; }, 800);
+          setTimeout(() => { transitioning = false; }, 900);
         } else {
-          // 到底部或頂部了，回彈
           deltaAccum = 0;
           if (mainContent) {
-            mainContent.style.transition = 'transform 0.4s var(--bounce)';
-            mainContent.style.transform = `translateY(0)`;
+            mainContent.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            mainContent.style.transform  = 'translateY(0)';
           }
         }
       }
     }, { passive: false });
 
-    /* ── Intersection Observer ── */
-    const observerOptions = {
-      root: null,
-      threshold: 0.8,
-      rootMargin: '0px'
-    };
-
+    /* ── Intersection Observer — sync nav + fade-in ── */
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        const fadeElements = entry.target.querySelectorAll('.fade-in');
+        const fadeEls = entry.target.querySelectorAll('.fade-in');
 
         if (entry.isIntersecting) {
-          const id = entry.target.id;
+          const id  = entry.target.id;
           const idx = sectionIds.indexOf(id);
-          current = idx;
+          current   = idx;
 
-          dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+          dots.forEach((d, i)     => d.classList.toggle('active', i === idx));
           navLinks.forEach((l, i) => l.classList.toggle('active', i === idx));
 
-          // 進入頁面時彈出元件
-          fadeElements.forEach(el => {
-            el.classList.add('visible');
-          });
+          fadeEls.forEach(el => el.classList.add('visible'));
         } else {
-          // 離開頁面時恢復原狀 (移除 visible)，下次抵達時才會再次觸發動畫
-          fadeElements.forEach(el => {
-            el.classList.remove('visible');
-          });
+          fadeEls.forEach(el => el.classList.remove('visible'));
         }
       });
-    }, observerOptions);
+    }, { root: null, threshold: 0.8, rootMargin: '0px' });
 
     sections.forEach(s => observer.observe(s));
 
-    /* ── Keyboard nav ── */
+    /* ── Keyboard navigation ── */
     window.addEventListener('keydown', e => {
       if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-        e.preventDefault();
-        goTo(current + 1);
+        e.preventDefault(); goTo(current + 1);
       }
       if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        e.preventDefault();
-        goTo(current - 1);
+        e.preventDefault(); goTo(current - 1);
       }
     });
 
+    /* ── Initial fade-in for #about ── */
     if (window.scrollY === 0) {
       document.querySelectorAll('#about .fade-in').forEach(el => el.classList.add('visible'));
     }
-    /* ── Language Switcher Logic ── */
-    const langBtns = document.querySelectorAll('[data-lang-set]');
-    const htmlEl = document.documentElement;
+
+    /* ── Language Switcher ── */
+    const langBtns      = document.querySelectorAll('[data-lang-set]');
+    const htmlEl        = document.documentElement;
     const langIndicator = document.querySelector('.lang-indicator');
 
     function setLanguage(lang, immediate = false) {
-      // 1. 立即更新 UI (指示器位置與按鈕狀態)
       let activeBtn;
       langBtns.forEach(btn => {
         const isActive = btn.getAttribute('data-lang-set') === lang;
@@ -1515,11 +1294,9 @@
 
       if (activeBtn && langIndicator) {
         langIndicator.style.width = `${activeBtn.offsetWidth}px`;
-        langIndicator.style.left = `${activeBtn.offsetLeft}px`;
+        langIndicator.style.left  = `${activeBtn.offsetLeft}px`;
       }
 
-      // 2. 只有在需要立即切換 (如初始化) 時才直接變更內容
-      // 否則延遲到動畫進行一半 (200ms) 再變更文字
       if (immediate) {
         htmlEl.setAttribute('lang', lang);
         localStorage.setItem('preferred-lang', lang);
@@ -1527,20 +1304,17 @@
         setTimeout(() => {
           htmlEl.setAttribute('lang', lang);
           localStorage.setItem('preferred-lang', lang);
-        }, 200); // 動畫進行到一半時切換內容
+        }, 200);
       }
     }
 
     langBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const lang = btn.getAttribute('data-lang-set');
-        if (htmlEl.getAttribute('lang') !== lang) {
-          setLanguage(lang);
-        }
+        if (htmlEl.getAttribute('lang') !== lang) setLanguage(lang);
       });
     });
 
-    // Init language (立即切換)
     const savedLang = localStorage.getItem('preferred-lang') || 'zh-TW';
     setLanguage(savedLang, true);
   </script>
