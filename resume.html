@@ -636,7 +636,13 @@
       width: 100%;
       position: relative;
       z-index: 2;
+      max-height: calc(var(--vh, 1vh) * 100 - var(--nav-h) - 5rem);
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+
+    .portfolio-layout::-webkit-scrollbar { display: none; }
 
     .project-grid {
       display: grid;
@@ -649,6 +655,7 @@
     .project-card {
       background: transparent;
       border-right: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
       padding: 2.25rem 2rem;
       position: relative;
       overflow: hidden;
@@ -656,7 +663,11 @@
       cursor: pointer;
     }
 
-    .project-card:last-child { border-right: none; }
+    /* 3-column grid: remove right border on 3rd column */
+    .project-card:nth-child(3n) { border-right: none; }
+
+    /* 3-column grid: remove bottom border on last row (cards 4-6) */
+    .project-card:nth-last-child(-n+3) { border-bottom: none; }
 
     .project-card:hover { background: var(--surface); }
 
@@ -848,11 +859,16 @@
       }
 
       .project-card {
-        border-right: none;
-        border-bottom: 0.5px solid var(--border);
+        border-right: none !important;
+        border-bottom: 0.5px solid var(--border) !important;
       }
 
-      .project-card:last-child { border-bottom: none; }
+      .project-card:last-child { border-bottom: none !important; }
+
+      .portfolio-layout {
+        max-height: none;
+        overflow-y: visible;
+      }
 
       /* Card links always visible on touch */
       .card-link {
@@ -877,13 +893,19 @@
 
       .project-grid { grid-template-columns: repeat(2, 1fr); }
 
-      .project-card:nth-child(2) { border-right: none; }
-      .project-card:last-child {
-        grid-column: 1 / -1;
-        border-right: none;
-        border-top: 0.5px solid var(--border);
-        max-width: 50%;
-      }
+      /* Reset desktop 3n rule, apply 2n for 2-column tablet layout */
+      .project-card:nth-child(3n) { border-right: 0.5px solid var(--border); }
+      .project-card:nth-last-child(-n+3) { border-bottom: 0.5px solid var(--border); }
+
+      .project-card:nth-child(2n) { border-right: none; }
+      /* Last 2 cards have no bottom border */
+      .project-card:nth-last-child(-n+2) { border-bottom: none; }
+
+    }
+
+    /* Tablet touch: always show card links when no hover capability */
+    @media (min-width: 768px) and (max-width: 1024px) and (hover: none) {
+      .card-link { opacity: 1; transform: translateY(0); }
     }
 
     @media (orientation: landscape) and (max-height: 500px) {
@@ -900,6 +922,11 @@
         height: auto;
         min-height: auto;
         padding: calc(var(--nav-h) + 1rem) 3rem 2rem;
+      }
+
+      .portfolio-layout {
+        max-height: none;
+        overflow-y: visible;
       }
     }
 
@@ -1254,6 +1281,97 @@
             </a>
           </div>
 
+          <div class="project-card fade-in" style="transition-delay: 0.3s">
+            <span class="card-num">04</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 1.5L14.5 7.5L8 14.5L1.5 7.5L8 1.5Z" stroke="currentColor" stroke-width="0.75"/>
+                <path d="M1.5 7.5h13M8 1.5v13" stroke="currentColor" stroke-width="0.75"/>
+              </svg>
+            </div>
+            <div class="card-title">
+              <span data-zh>作品名稱 D</span>
+              <span data-en>Project Name D</span>
+            </div>
+            <div class="card-desc">
+              <span data-zh>第四個作品介紹，說明此專案的核心亮點與你的貢獻。</span>
+              <span data-en>Description for the fourth project, highlighting your key contributions and outcomes.</span>
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">TypeScript</span>
+              <span class="card-tag">GraphQL</span>
+            </div>
+            <a class="card-link" href="#">
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="project-card fade-in" style="transition-delay: 0.4s">
+            <span class="card-num">05</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="9" width="3" height="5.5" stroke="currentColor" stroke-width="0.75"/>
+                <rect x="6.5" y="5.5" width="3" height="9" stroke="currentColor" stroke-width="0.75"/>
+                <rect x="11" y="1.5" width="3" height="13" stroke="currentColor" stroke-width="0.75"/>
+              </svg>
+            </div>
+            <div class="card-title">
+              <span data-zh>作品名稱 E</span>
+              <span data-en>Project Name E</span>
+            </div>
+            <div class="card-desc">
+              <span data-zh>第五個作品介紹，展現資料視覺化或分析相關的專案成果。</span>
+              <span data-en>Description for the fifth project, showcasing data visualization or analytics work.</span>
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">React</span>
+              <span class="card-tag">Chart.js</span>
+              <span class="card-tag">API</span>
+            </div>
+            <a class="card-link" href="#">
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="project-card fade-in" style="transition-delay: 0.5s">
+            <span class="card-num">06</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="1.5" y="5" width="13" height="9" stroke="currentColor" stroke-width="0.75"/>
+                <rect x="3.5" y="2.5" width="9" height="9" stroke="currentColor" stroke-width="0.75"/>
+                <rect x="5.5" y="0.75" width="5" height="9" stroke="currentColor" stroke-width="0.75"/>
+              </svg>
+            </div>
+            <div class="card-title">
+              <span data-zh>作品名稱 F</span>
+              <span data-en>Project Name F</span>
+            </div>
+            <div class="card-desc">
+              <span data-zh>第六個作品介紹，呈現你在系統架構或全端開發方面的能力。</span>
+              <span data-en>Description for the sixth project, demonstrating system architecture or full-stack capabilities.</span>
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">Docker</span>
+              <span class="card-tag">PostgreSQL</span>
+              <span class="card-tag">CI/CD</span>
+            </div>
+            <a class="card-link" href="#">
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
         </div>
       </div>
       <span class="section-num" aria-hidden="true">03 — 03</span>
@@ -1356,6 +1474,20 @@
 
     window.addEventListener('wheel', e => {
       if (!isDesktop() || transitioning) return;
+
+      // Portfolio section: allow internal scroll before switching pages
+      if (current === 2) {
+        const layout = document.querySelector('#portfolio .portfolio-layout');
+        if (layout && layout.scrollHeight > layout.clientHeight) {
+          const atBottom = layout.scrollTop + layout.clientHeight >= layout.scrollHeight - 2;
+          const atTop    = layout.scrollTop <= 2;
+          if ((e.deltaY > 0 && !atBottom) || (e.deltaY < 0 && !atTop)) {
+            deltaAccum = 0; // reset so no accidental page-switch on boundary
+            return;         // let browser scroll the layout div natively
+          }
+        }
+      }
+
       e.preventDefault();
 
       clearTimeout(resetTimer);
