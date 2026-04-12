@@ -861,6 +861,7 @@
       .project-card {
         border-right: none !important;
         border-bottom: 0.5px solid var(--border) !important;
+        padding: 1.5rem 1.25rem;
       }
 
       .project-card:last-child { border-bottom: none !important; }
@@ -1555,6 +1556,25 @@
     }, { root: null, threshold: 0.4, rootMargin: '0px' });
 
     sections.forEach(s => observer.observe(s));
+
+    /* ── Per-element fade-in observer (fixes tall sections on mobile) ── */
+    // The section-level observer uses threshold 0.4, but on mobile a tall portfolio
+    // section (~2000px) never reaches 40% viewport coverage, leaving cards at opacity:0.
+    // This per-element observer fires at 12% so each card fades in as it scrolls into view.
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (!isDesktop()) {
+            fadeObserver.unobserve(entry.target); // once shown, keep visible on mobile
+          }
+        } else if (isDesktop()) {
+          entry.target.classList.remove('visible'); // desktop: re-animate on section re-entry
+        }
+      });
+    }, { root: null, threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
 
     /* ── Handle Resize ── */
     let resizeTimer;
