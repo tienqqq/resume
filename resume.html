@@ -1521,16 +1521,20 @@
               </svg>
             </div>
             <div class="card-title">
-              <span data-zh>作品名稱 B</span>
-              <span data-en>Project Name B</span>
+              <span data-zh>缺陷檢測系統</span>
+              <span data-en>Defect Detection System</span>
             </div>
             <div class="card-desc">
-              <span data-zh>另一個作品的簡要描述，突出最有亮點的部分。</span>
-              <span data-en>Another brief description of a project, highlighting its most impressive aspects.</span>
+              <span data-zh>多相機缺陷檢測系統，即時高速檢測缺陷顯示前端滾動地圖對應位置。</span>
+              <span data-en>Multi-camera defect detection system for real-time high-speed defect detection, displaying results on a scrolling map on the frontend.</span>
             </div>
             <div class="card-tags">
-              <span class="card-tag">Python</span>
-              <span class="card-tag">AI / ML</span>
+              <span class="card-tag">C++</span>
+              <span class="card-tag">OpenCV</span>
+              <span class="card-tag">Multi-threading</span>
+              <span class="card-tag">Django</span>
+              <span class="card-tag">PostgreSQL</span>
+              <span class="card-tag">WebSocket</span>
             </div>
             <a class="card-link" href="#">
               <span data-zh>查看作品</span>
@@ -1550,16 +1554,19 @@
               </svg>
             </div>
             <div class="card-title">
-              <span data-zh>作品名稱 C</span>
-              <span data-en>Project Name C</span>
+              <span data-zh>漂流模擬系統</span>
+              <span data-en>Drift Simulation System</span>
             </div>
             <div class="card-desc">
-              <span data-zh>第三個作品介紹。</span>
-              <span data-en>Description for the third project.</span>
+              <span data-zh>漂流預測系統，整合模擬、排程與LLM決策。</span>
+              <span data-en>Drift prediction system integrating simulation, scheduling, and LLM decision-making.</span>
             </div>
             <div class="card-tags">
-              <span class="card-tag">Vue.js</span>
-              <span class="card-tag">D3.js</span>
+              <span class="card-tag">Django</span>
+              <span class="card-tag">Celery</span>
+              <span class="card-tag">algorithm</span>
+              <span class="card-tag">LLM</span>
+              <span class="card-tag">RAG</span>
             </div>
             <a class="card-link" href="#">
               <span data-zh>查看作品</span>
@@ -1579,16 +1586,17 @@
               </svg>
             </div>
             <div class="card-title">
-              <span data-zh>作品名稱 D</span>
-              <span data-en>Project Name D</span>
+              <span data-zh>排程系統</span>
+              <span data-en>Scheduling System</span>
             </div>
             <div class="card-desc">
-              <span data-zh>第四個作品介紹，說明此專案的核心亮點與你的貢獻。</span>
-              <span data-en>Description for the fourth project, highlighting your key contributions and outcomes.</span>
+              <span data-zh>跨系統排程平台，集中管理與穩定執行腳本。</span>
+              <span data-en>A cross-system scheduling platform for centralized management and stable execution of scripts.</span>
             </div>
             <div class="card-tags">
-              <span class="card-tag">TypeScript</span>
-              <span class="card-tag">GraphQL</span>
+              <span class="card-tag">Django</span>
+              <span class="card-tag">Cron</span>
+              <span class="card-tag">nohup</span>
             </div>
             <a class="card-link" href="#">
               <span data-zh>查看作品</span>
@@ -2025,40 +2033,40 @@
       {
         num: '02',
         zh: {
-          title: '作品名稱 B',
-          desc: '這是作品 B 的詳細自述。介紹此專案的應用場景與動機，你如何規劃與實作解決方案，並強調最具亮點的技術決策或創新做法。透過具體數據或用戶回饋佐證你的成果，讓閱覽者清楚理解你在這個作品中帶來的價值，以及它對整個產品或團隊所造成的正向影響。'
+          title: '缺陷檢測系統',
+          desc: '開發缺陷檢測系統，使用 C++ 與 OpenCV 建立相機控制與檢測核心，整合 Django 操作 DLL 並管理檢測流程，透過 WebSocket 即時回傳結果至前端。實作多執行緒影像處理與多相機平行運作架構，達成約16MB影像0.01秒檢測速度，並建立記憶體監控機制提升系統穩定性，兼顧準確率與效能優化。'
         },
         en: {
-          title: 'Project Name B',
-          desc: 'A detailed overview of Project B. Describe the application context and motivation, how you planned and implemented the solution, and highlight the most notable technical decisions or innovative approaches. Back your results with concrete data or user feedback so viewers clearly understand the value you brought to this project and its positive impact on the product and team.'
+          title: 'Defect Detection System',
+          desc: 'Developed a defect detection system using C++ and OpenCV for camera control and core detection, integrated with Django to operate the DLL and manage the detection workflow, and utilized WebSocket for real-time result feedback to the frontend. Implemented a multi-threaded image processing architecture with parallel operation of multiple cameras, achieving a detection speed of approximately 0.01 seconds for 16MB images. Established a memory monitoring mechanism to enhance system stability while optimizing both accuracy and performance.'
         },
-        tags: ['Python', 'AI / ML'],
+        tags: ['C++', 'OpenCV', 'Multi-threading', 'Django', 'PostgreSQL', 'WebSocket'],
         link: '#'
       },
       {
         num: '03',
         zh: {
-          title: '作品名稱 C',
-          desc: '這是作品 C 的詳細自述。說明此專案從概念到上線的完整歷程，你如何與不同成員協作，克服技術或設計上的瓶頸，最終交付出令人滿意的產品。描述你在此過程中習得的關鍵技術或工程觀念，以及這段經驗如何強化你作為開發者的核心能力與跨域協作視野。'
+          title: '漂流模擬系統',
+          desc: '開發漂流模擬與預測系統，基於 OpenDrift 建立物體漂流模型，結合 Celery 實作分散式排程與並發計算，支援任務重試與狀態追蹤。透過凸包與 DBSCAN 聚合落水區域，並以搜尋演算法進行路徑推估，最後整合 LLM 與 RAG 生成決策建議，實現從數值模擬到智慧分析的完整流程。'
         },
         en: {
-          title: 'Project Name C',
-          desc: 'A detailed overview of Project C. Describe the full journey from concept to launch, how you collaborated across teams, and how you overcame technical or design bottlenecks to deliver a satisfying product. Share the key technical skills or engineering insights gained throughout the process, and how this experience strengthened your core capabilities and cross-functional collaboration perspective.'
+          title: 'Drift Simulation System',
+          desc: 'Developed a drift simulation and prediction system, building upon the OpenDrift framework to create object drift models. Integrated Celery for distributed task scheduling and concurrent computing, supporting task retries and status tracking. Utilized convex hulls and DBSCAN clustering to aggregate drowning areas, and employed search algorithms for path estimation. Finally, integrated LLM and RAG to generate decision-making suggestions, achieving a complete workflow from numerical simulation to intelligent analysis.'
         },
-        tags: ['Vue.js', 'D3.js'],
+        tags: ['Django', 'Celery', 'algorithm', 'LLM', 'RAG'],
         link: '#'
       },
       {
         num: '04',
         zh: {
-          title: '作品名稱 D',
-          desc: '這是作品 D 的詳細自述。闡述此專案的技術複雜度與你在架構設計或系統優化方面的貢獻。說明你如何在效能、可維護性與開發速度之間取得平衡，以及過程中如何做出關鍵決策。結合量化成果或案例，展現你解決複雜問題的工程思維與系統性分析能力。'
+          title: '排程系統',
+          desc: '開發跨系統排程平台，整合 Django 與 Linux cron 機制，提供統一腳本註冊與定時執行流程。支援多系統腳本接入、自動排程觸發與背景執行（nohup），並建立完整日誌與執行狀態追蹤機制，確保任務穩定運行與可追溯性，提升多服務環境下的維運效率與可靠性。'
         },
         en: {
-          title: 'Project Name D',
-          desc: 'A detailed overview of Project D. Explain the technical complexity and your contributions to architecture design or system optimization. Describe how you balanced performance, maintainability, and development velocity, and how you made critical decisions throughout the process. Use quantitative results or case examples to showcase your engineering mindset and systematic approach to complex problem-solving.'
+          title: 'Scheduling System',
+          desc: 'Developed a cross-system scheduling platform, integrating Django and Linux cron mechanisms to provide a unified script registration and scheduled execution workflow. Supported multi-system script integration, automatic scheduling triggers, and background execution (nohup), along with establishing a comprehensive logging and execution status tracking mechanism to ensure task stability and traceability, thereby improving operational efficiency and reliability in multi-service environments.'
         },
-        tags: ['TypeScript', 'GraphQL'],
+        tags: ['Django', 'Cron', 'nohup'],
         link: '#'
       },
       {
