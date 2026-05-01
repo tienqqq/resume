@@ -947,6 +947,247 @@
       .fade-in.visible { transform: none !important; }
       .scroll-hint { animation: none; }
     }
+
+    /* ═══════════════════════════════
+       PROJECT MODAL
+    ═══════════════════════════════ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: rgba(17, 17, 17, 0);
+      visibility: hidden;
+      pointer-events: none;
+      transition: background var(--t-base) var(--ease-out),
+                  visibility 0s linear var(--t-base);
+    }
+
+    .modal-overlay.open {
+      background: rgba(17, 17, 17, 0.55);
+      visibility: visible;
+      pointer-events: auto;
+      transition: background var(--t-base) var(--ease-out),
+                  visibility 0s linear 0s;
+    }
+
+    .modal-box {
+      background: var(--surface);
+      border: 0.5px solid var(--border-em);
+      max-width: 720px;
+      width: 100%;
+      max-height: min(90vh, 840px);
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      position: relative;
+      opacity: 0;
+      transform: translateY(18px) scale(0.975);
+      transition: opacity var(--t-base) var(--ease-out),
+                  transform var(--t-base) var(--ease-out);
+    }
+
+    .modal-box::-webkit-scrollbar { display: none; }
+
+    .modal-overlay.open .modal-box {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Close button */
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: 0.5px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      z-index: 10;
+      transition: border-color var(--t-base) var(--ease-out),
+                  color var(--t-base) var(--ease-out),
+                  background var(--t-base) var(--ease-out);
+    }
+
+    .modal-close:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .modal-close:focus-visible {
+      outline: 1px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Image area */
+    .modal-img-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--bg2);
+      overflow: hidden;
+      position: relative;
+      border-bottom: 0.5px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-img-ph {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .modal-img-ph svg { color: var(--accent); opacity: 0.28; }
+
+    .modal-img-ph-text {
+      font-family: var(--font-sans);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--subtle);
+    }
+
+    /* Body */
+    .modal-body {
+      padding: 2rem 2.5rem 2.5rem;
+    }
+
+    .modal-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .modal-num-label {
+      font-family: var(--font-sans);
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
+      color: var(--subtle);
+    }
+
+    .modal-tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.55rem, 3vw, 2.1rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      line-height: 1.15;
+      padding-right: 3rem; /* avoid close button overlap on small boxes */
+    }
+
+.modal-desc-label {
+      font-family: var(--font-sans);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .modal-desc-label::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    .modal-desc {
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.95;
+      margin-bottom: 2rem;
+    }
+
+/* ── Mobile: slide-up sheet ── */
+    @media (max-width: 767px) {
+      .modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+      }
+
+      .modal-box {
+        max-width: 100%;
+        max-height: 92dvh;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        transform: translateY(40px);
+        border-radius: 0;
+      }
+
+      .modal-overlay.open .modal-box {
+        transform: translateY(0);
+      }
+
+      /* Sheet drag handle */
+      .modal-box::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 3px;
+        background: var(--border-em);
+        opacity: 0.18;
+        margin: 0.85rem auto 0;
+        border-radius: 99px;
+      }
+
+      .modal-img-wrap { aspect-ratio: 16 / 8; }
+
+      .modal-body {
+        padding: 1.25rem 1.25rem 3rem;
+      }
+    }
+
+    /* ── Tablet ── */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .modal-overlay { padding: 1.25rem; }
+      .modal-box { max-width: 580px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .modal-box {
+        transition: opacity 0.2s ease;
+        transform: none !important;
+      }
+    }
+
+    /* Lock body scroll when modal is open */
+    body.modal-lock { overflow: hidden; }
+    @media (max-width: 767px) {
+      html.modal-lock { overflow: hidden; }
+    }
   </style>
 </head>
 
@@ -1387,6 +1628,60 @@
 
   </main>
 
+  <!-- ═══ PROJECT MODAL ═══ -->
+  <div id="project-modal" class="modal-overlay"
+       role="dialog" aria-modal="true" aria-labelledby="modal-title-text">
+
+    <div class="modal-box" id="modal-box">
+
+      <!-- Close -->
+      <button class="modal-close" id="modal-close-btn" aria-label="關閉 / Close">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <!-- Image / preview -->
+      <div class="modal-img-wrap" id="modal-img-wrap">
+        <div class="modal-img-ph" id="modal-img-ph">
+          <svg width="52" height="38" viewBox="0 0 52 38" fill="none" aria-hidden="true">
+            <rect x="1" y="1" width="50" height="36" stroke="currentColor" stroke-width="0.75"/>
+            <circle cx="15" cy="14" r="5" stroke="currentColor" stroke-width="0.75"/>
+            <path d="M1 28L15 17l10 9 9-7 17 10" stroke="currentColor" stroke-width="0.75" stroke-linejoin="round"/>
+          </svg>
+          <span class="modal-img-ph-text" data-zh>專案截圖</span>
+          <span class="modal-img-ph-text" data-en>Project Preview</span>
+        </div>
+        <img class="modal-img" id="modal-img" src="" alt="" style="display:none">
+      </div>
+
+      <!-- Content -->
+      <div class="modal-body">
+        <div class="modal-eyebrow">
+          <span class="modal-num-label" id="modal-num"></span>
+          <div class="modal-tech-row" id="modal-tech"></div>
+        </div>
+
+        <h3 class="modal-title" id="modal-title-text">
+          <span id="modal-title-zh" data-zh></span>
+          <span id="modal-title-en" data-en></span>
+        </h3>
+
+        <div class="modal-desc-label">
+          <span data-zh>專案介紹</span>
+          <span data-en>Project Details</span>
+        </div>
+
+        <p class="modal-desc">
+          <span id="modal-desc-zh" data-zh></span>
+          <span id="modal-desc-en" data-en></span>
+        </p>
+
+      </div>
+
+    </div>
+  </div>
+
   <script>
     /* ── Helpers ── */
     const isDesktop = () =>
@@ -1434,6 +1729,7 @@
 
     let current = 0;
     let baseOffset = 0; // 追蹤基礎位移座標
+    let modalOpen  = false;
 
     /* ── Navigate to section idx ── */
     function goTo(idx) {
@@ -1604,6 +1900,8 @@
 
     /* ── Keyboard navigation ── */
     window.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modalOpen) { closeModal(); return; }
+      if (modalOpen) return;
       if (e.key === 'ArrowDown' || e.key === 'PageDown') {
         e.preventDefault(); goTo(current + 1);
       }
@@ -1664,6 +1962,200 @@
         goTo(idx);
       } else {
         goTo(current);
+      }
+    });
+
+    /* ═══════════════════════════════
+       PROJECT MODAL
+    ═══════════════════════════════ */
+    const PROJECTS = [
+      {
+        num: '01',
+        zh: {
+          title: '作品名稱 A',
+          desc: '這是作品 A 的詳細自述。說明此專案的背景目標、你所擔任的角色與核心貢獻，以及所採用的技術架構與工程決策。描述你克服了哪些技術挑戰、達成了哪些可量化的成果，例如效能提升百分比、用戶成長數字，或獲得的正面評價。這段約 150 字的介紹，讓瀏覽者能深入了解你的思維方式與實際執行力。'
+        },
+        en: {
+          title: 'Project Name A',
+          desc: 'A detailed overview of Project A. Describe the project background and goals, your specific role and key contributions, and the technical architecture and engineering decisions involved. Explain the challenges you overcame and the measurable outcomes achieved — such as performance improvements, user growth metrics, or positive feedback. This ~150-word description gives viewers a thorough understanding of your thinking process and execution capabilities.'
+        },
+        tags: ['React', 'Node.js', 'Supabase'],
+        link: '#'
+      },
+      {
+        num: '02',
+        zh: {
+          title: '作品名稱 B',
+          desc: '這是作品 B 的詳細自述。介紹此專案的應用場景與動機，你如何規劃與實作解決方案，並強調最具亮點的技術決策或創新做法。透過具體數據或用戶回饋佐證你的成果，讓閱覽者清楚理解你在這個作品中帶來的價值，以及它對整個產品或團隊所造成的正向影響。'
+        },
+        en: {
+          title: 'Project Name B',
+          desc: 'A detailed overview of Project B. Describe the application context and motivation, how you planned and implemented the solution, and highlight the most notable technical decisions or innovative approaches. Back your results with concrete data or user feedback so viewers clearly understand the value you brought to this project and its positive impact on the product and team.'
+        },
+        tags: ['Python', 'AI / ML'],
+        link: '#'
+      },
+      {
+        num: '03',
+        zh: {
+          title: '作品名稱 C',
+          desc: '這是作品 C 的詳細自述。說明此專案從概念到上線的完整歷程，你如何與不同成員協作，克服技術或設計上的瓶頸，最終交付出令人滿意的產品。描述你在此過程中習得的關鍵技術或工程觀念，以及這段經驗如何強化你作為開發者的核心能力與跨域協作視野。'
+        },
+        en: {
+          title: 'Project Name C',
+          desc: 'A detailed overview of Project C. Describe the full journey from concept to launch, how you collaborated across teams, and how you overcame technical or design bottlenecks to deliver a satisfying product. Share the key technical skills or engineering insights gained throughout the process, and how this experience strengthened your core capabilities and cross-functional collaboration perspective.'
+        },
+        tags: ['Vue.js', 'D3.js'],
+        link: '#'
+      },
+      {
+        num: '04',
+        zh: {
+          title: '作品名稱 D',
+          desc: '這是作品 D 的詳細自述。闡述此專案的技術複雜度與你在架構設計或系統優化方面的貢獻。說明你如何在效能、可維護性與開發速度之間取得平衡，以及過程中如何做出關鍵決策。結合量化成果或案例，展現你解決複雜問題的工程思維與系統性分析能力。'
+        },
+        en: {
+          title: 'Project Name D',
+          desc: 'A detailed overview of Project D. Explain the technical complexity and your contributions to architecture design or system optimization. Describe how you balanced performance, maintainability, and development velocity, and how you made critical decisions throughout the process. Use quantitative results or case examples to showcase your engineering mindset and systematic approach to complex problem-solving.'
+        },
+        tags: ['TypeScript', 'GraphQL'],
+        link: '#'
+      },
+      {
+        num: '05',
+        zh: {
+          title: '作品名稱 E',
+          desc: '這是作品 E 的詳細自述。介紹此資料視覺化或分析專案的核心目標，你如何處理並呈現大量資料，以及所選擇的圖表類型與互動設計邏輯。說明你在資料清洗、效能優化或跨平台相容性上的具體做法，以及這套解決方案如何協助使用者洞察數據並做出更好的業務決策。'
+        },
+        en: {
+          title: 'Project Name E',
+          desc: 'A detailed overview of Project E. Introduce the core goals of this data visualization or analytics project, how you processed and presented large datasets, and the rationale behind your chosen chart types and interaction design. Explain your specific approaches to data cleaning, performance optimization, or cross-platform compatibility, and how this solution helped users surface insights and make better business decisions.'
+        },
+        tags: ['React', 'Chart.js', 'API'],
+        link: '#'
+      },
+      {
+        num: '06',
+        zh: {
+          title: '作品名稱 F',
+          desc: '這是作品 F 的詳細自述。呈現你在全端開發或系統架構方面的深度，說明如何設計可擴展、高可用的服務，並透過 CI/CD 流程確保穩定部署。描述你如何協調前後端技術選型、資料庫設計與雲端基礎建設，並說明最終系統的效能指標、穩定度表現，以及對業務的具體影響。'
+        },
+        en: {
+          title: 'Project Name F',
+          desc: 'A detailed overview of Project F. Showcase your depth in full-stack development or system architecture, explaining how you designed scalable, highly available services and ensured stable deployment through CI/CD pipelines. Describe how you coordinated frontend and backend technology choices, database design, and cloud infrastructure — along with the final system\'s performance metrics, reliability, and concrete business impact.'
+        },
+        tags: ['Docker', 'PostgreSQL', 'CI/CD'],
+        link: '#'
+      }
+    ];
+
+    /* ── Modal DOM refs ── */
+    const modalOverlay  = document.getElementById('project-modal');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalNumEl    = document.getElementById('modal-num');
+    const modalTechEl   = document.getElementById('modal-tech');
+    const modalTitleZh  = document.getElementById('modal-title-zh');
+    const modalTitleEn  = document.getElementById('modal-title-en');
+    const modalDescZh   = document.getElementById('modal-desc-zh');
+    const modalDescEn   = document.getElementById('modal-desc-en');
+    const modalImgEl    = document.getElementById('modal-img');
+    const modalImgPhEl  = document.getElementById('modal-img-ph');
+
+    let modalTriggerEl = null;
+
+    /* ── Open ── */
+    function openModal(idx) {
+      const p = PROJECTS[idx];
+      if (!p) return;
+
+      modalNumEl.textContent = p.num;
+
+      modalTechEl.innerHTML = p.tags
+        .map(t => `<span class="card-tag">${t}</span>`)
+        .join('');
+
+      modalTitleZh.textContent = p.zh.title;
+      modalTitleEn.textContent = p.en.title;
+      modalDescZh.textContent  = p.zh.desc;
+      modalDescEn.textContent  = p.en.desc;
+
+      // Image: use data-img on card if present, else show placeholder
+      const card = document.querySelectorAll('.project-card')[idx];
+      const imgSrc = card ? card.dataset.img : '';
+      if (imgSrc) {
+        modalImgEl.src = imgSrc;
+        modalImgEl.alt = p.zh.title;
+        modalImgEl.style.display = 'block';
+        modalImgPhEl.style.display = 'none';
+      } else {
+        modalImgEl.style.display = 'none';
+        modalImgPhEl.style.display = 'flex';
+      }
+
+      modalOverlay.classList.add('open');
+      modalOpen = true;
+      document.documentElement.classList.add('modal-lock');
+      document.body.classList.add('modal-lock');
+
+      requestAnimationFrame(() => modalCloseBtn.focus());
+    }
+
+    /* ── Close ── */
+    function closeModal() {
+      modalOverlay.classList.remove('open');
+      modalOpen = false;
+      document.documentElement.classList.remove('modal-lock');
+      document.body.classList.remove('modal-lock');
+      if (modalTriggerEl) {
+        modalTriggerEl.focus();
+        modalTriggerEl = null;
+      }
+    }
+
+    /* ── Card click / keyboard ── */
+    document.querySelectorAll('.project-card').forEach((card, idx) => {
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-haspopup', 'dialog');
+
+      card.addEventListener('click', e => {
+        if (e.target.closest('.card-link')) return; // let anchor handle itself
+        modalTriggerEl = card;
+        openModal(idx);
+      });
+
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          modalTriggerEl = card;
+          openModal(idx);
+        }
+      });
+    });
+
+    /* ── Close on overlay backdrop click ── */
+    modalOverlay.addEventListener('click', e => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    /* ── Close button ── */
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    /* ── Basic focus trap (Tab cycles within modal) ── */
+    modalOverlay.addEventListener('keydown', e => {
+      if (!modalOpen || e.key !== 'Tab') return;
+      const focusable = Array.from(
+        modalOverlay.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter(el => !el.disabled);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
       }
     });
   </script>
