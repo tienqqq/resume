@@ -1479,17 +1479,20 @@
               </svg>
             </div>
             <div class="card-title">
-              <span data-zh>作品名稱 A</span>
-              <span data-en>Project Name A</span>
+              <span data-zh>語者辨識系統</span>
+              <span data-en>Speaker Recognition System</span>
             </div>
             <div class="card-desc">
-              <span data-zh>簡短說明這個作品是什麼、解決了什麼問題、你的角色是什麼。</span>
-              <span data-en>Briefly explain what this project is, the problem it solved, and your specific role.</span>
+              <span data-zh>語者辨識準確率由20%提升至80%。</span>
+              <span data-en>Speaker recognition accuracy improved from 20% to 80%.</span>
             </div>
             <div class="card-tags">
-              <span class="card-tag">React</span>
-              <span class="card-tag">Node.js</span>
-              <span class="card-tag">Supabase</span>
+              <span class="card-tag">Python</span>
+              <span class="card-tag">TensorFlow</span>
+              <span class="card-tag">Keras</span>
+              <span class="card-tag">MFCC</span>
+              <span class="card-tag">CNN</span>
+              <span class="card-tag">RNN</span>
             </div>
             <a class="card-link" href="#">
               <span data-zh>查看作品</span>
@@ -1605,17 +1608,19 @@
               </svg>
             </div>
             <div class="card-title">
-              <span data-zh>作品名稱 E</span>
-              <span data-en>Project Name E</span>
+              <span data-zh>監控系統</span>
+              <span data-en>Monitoring System</span>
             </div>
             <div class="card-desc">
-              <span data-zh>第五個作品介紹，展現資料視覺化或分析相關的專案成果。</span>
-              <span data-en>Description for the fifth project, showcasing data visualization or analytics work.</span>
+              <span data-zh>跨網段監控系統，優化高頻資料查詢效能。</span>
+              <span data-en>Cross-segment monitoring system, optimizing high-frequency data query performance.</span>
             </div>
             <div class="card-tags">
-              <span class="card-tag">React</span>
-              <span class="card-tag">Chart.js</span>
-              <span class="card-tag">API</span>
+              <span class="card-tag">Django</span>
+              <span class="card-tag">Prometheus</span>
+              <span class="card-tag">PostgreSQL</span>
+              <span class="card-tag">Docker</span>
+              <span class="card-tag">REST API</span>
             </div>
             <a class="card-link" href="#">
               <span data-zh>查看作品</span>
@@ -2008,14 +2013,14 @@
       {
         num: '01',
         zh: {
-          title: '作品名稱 A',
-          desc: '這是作品 A 的詳細自述。說明此專案的背景目標、你所擔任的角色與核心貢獻，以及所採用的技術架構與工程決策。描述你克服了哪些技術挑戰、達成了哪些可量化的成果，例如效能提升百分比、用戶成長數字，或獲得的正面評價。這段約 150 字的介紹，讓瀏覽者能深入了解你的思維方式與實際執行力。'
+          title: '語者辨識系統',
+          desc: '研究語者尖叫聲之辨識方法，採用 MFCC 與梅爾頻譜進行聲學特徵提取，並以 Autoencoder 結合 CNN、RNN 建立模型進行特徵壓縮與時序建模。透過模型重建與分類結果比較不同架構效能，最終將語者辨識準確率由約20%提升至80%，顯著改善特殊聲音場景下的辨識表現。'
         },
         en: {
-          title: 'Project Name A',
-          desc: 'A detailed overview of Project A. Describe the project background and goals, your specific role and key contributions, and the technical architecture and engineering decisions involved. Explain the challenges you overcame and the measurable outcomes achieved — such as performance improvements, user growth metrics, or positive feedback. This ~150-word description gives viewers a thorough understanding of your thinking process and execution capabilities.'
+          title: 'Speaker Recognition System',
+          desc: 'Research on speaker recognition methods for identifying screams, utilizing MFCC and Mel-spectrograms for acoustic feature extraction, and combining Autoencoder with CNN and RNN to build a model for feature compression and temporal modeling. By comparing model reconstruction and classification results across different architectures, the speaker recognition accuracy was improved from approximately 20% to 80%, significantly enhancing performance in specialized audio scenarios.'
         },
-        tags: ['React', 'Node.js', 'Supabase'],
+        tags: ['Python', 'TensorFlow', 'Keras', 'MFCC', 'CNN', 'RNN'],
         link: '#'
       },
       {
@@ -2060,14 +2065,14 @@
       {
         num: '05',
         zh: {
-          title: '作品名稱 E',
-          desc: '這是作品 E 的詳細自述。介紹此資料視覺化或分析專案的核心目標，你如何處理並呈現大量資料，以及所選擇的圖表類型與互動設計邏輯。說明你在資料清洗、效能優化或跨平台相容性上的具體做法，以及這套解決方案如何協助使用者洞察數據並做出更好的業務決策。'
+          title: '監控系統',
+          desc: '開發跨網段系統監控平台，透過 Docker 部署於 Windows 環境，整合 Windows Exporter 與網路連線檢測，透過 Prometheus 定期收集150台設備狀態批次存入資料庫並計算系統健康度。設計後端 API 提供即時資料存取與前端顯示，並針對高頻監控數據進行資料庫查詢優化，確保每30秒更新下仍維持良好效能與穩定性。'
         },
         en: {
-          title: 'Project Name E',
-          desc: 'A detailed overview of Project E. Introduce the core goals of this data visualization or analytics project, how you processed and presented large datasets, and the rationale behind your chosen chart types and interaction design. Explain your specific approaches to data cleaning, performance optimization, or cross-platform compatibility, and how this solution helped users surface insights and make better business decisions.'
+          title: 'Monitoring System',
+          desc: 'Developed a cross-segment system monitoring platform, deployed on Windows environment using Docker. Integrated Windows Exporter and network connectivity checks, with Prometheus regularly collecting status from 150 devices and batch storing it in a database while calculating system health. Designed backend APIs for real-time data access and frontend display, and optimized database queries for high-frequency monitoring data to ensure good performance and stability under 30-second updates.'
         },
-        tags: ['React', 'Chart.js', 'API'],
+        tags: ['Django', 'PostgreSQL', 'REST API', 'Docker', 'Prometheus'],
         link: '#'
       },
       {
