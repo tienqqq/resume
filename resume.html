@@ -264,7 +264,7 @@
     /* ── Section Counter ── */
     .section-num {
       position: absolute;
-      bottom: 2rem;
+      bottom: 4rem;
       right: 5rem;
       font-family: var(--font-sans);
       font-size: 0.6rem;
@@ -503,7 +503,7 @@
       font-weight: 400;
       letter-spacing: 0.03em;
       color: var(--text);
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
       display: flex;
       align-items: baseline;
       gap: 1.25rem;
@@ -657,7 +657,7 @@
     /* ═══════════════════════════════
        PAGE 3 — PORTFOLIO
     ═══════════════════════════════ */
-    #portfolio { background: var(--bg); }
+    #portfolio, #portfolio2 { background: var(--bg); }
 
     .portfolio-layout {
       max-width: 1100px;
@@ -684,7 +684,7 @@
       background: var(--surface);
       border-right: 0.5px solid var(--border);
       border-bottom: 0.5px solid var(--border);
-      padding: 2.25rem 2rem;
+      padding: 1.5rem 2rem;
       position: relative;
       overflow: hidden;
       transition: background var(--t-base) var(--ease-out),
@@ -1229,6 +1229,10 @@
           <span data-zh>作品集</span>
           <span data-en>Portfolio</span>
         </a></li>
+      <li><a href="#portfolio2">
+          <span data-zh>作品集二</span>
+          <span data-en>Portfolio II</span>
+        </a></li>
     </ul>
     <div style="display: flex; align-items: center;">
       <div class="lang-switcher" role="group" aria-label="Language Switcher">
@@ -1256,13 +1260,18 @@
       <span data-zh>作品集</span>
       <span data-en>Portfolio</span>
     </a>
+    <a href="#portfolio2">
+      <span data-zh>作品集二</span>
+      <span data-en>Portfolio II</span>
+    </a>
   </nav>
 
   <!-- ═══ SIDE INDICATORS ═══ -->
   <nav class="nav-dots" aria-label="頁面導航">
-    <div class="dot active" data-target="about"      role="button" tabindex="0" aria-label="About"></div>
-    <div class="dot"        data-target="experience" role="button" tabindex="0" aria-label="Experience"></div>
-    <div class="dot"        data-target="portfolio"  role="button" tabindex="0" aria-label="Portfolio"></div>
+    <div class="dot active" data-target="about"       role="button" tabindex="0" aria-label="About"></div>
+    <div class="dot"        data-target="experience"  role="button" tabindex="0" aria-label="Experience"></div>
+    <div class="dot"        data-target="portfolio"   role="button" tabindex="0" aria-label="Portfolio"></div>
+    <div class="dot"        data-target="portfolio2"  role="button" tabindex="0" aria-label="Portfolio II"></div>
   </nav>
 
   <main id="main-content">
@@ -1368,7 +1377,7 @@
         <span data-zh>滾動</span>
         <span data-en>Scroll</span>
       </div>
-      <span class="section-num" aria-hidden="true">01 — 03</span>
+      <span class="section-num" aria-hidden="true">01 — 04</span>
     </section>
 
     <!-- ═══════════════════ PAGE 2 — EXPERIENCE ═══════════════════ -->
@@ -1454,7 +1463,7 @@
 
         </div>
       </div>
-      <span class="section-num" aria-hidden="true">02 — 03</span>
+      <span class="section-num" aria-hidden="true">02 — 04</span>
     </section>
 
     <!-- ═══════════════════ PAGE 3 — PORTFOLIO ═══════════════════ -->
@@ -1664,7 +1673,218 @@
 
         </div>
       </div>
-      <span class="section-num" aria-hidden="true">03 — 03</span>
+      <span class="section-num" aria-hidden="true">03 — 04</span>
+    </section>
+
+    <!-- ═══════════════════ PAGE 4 — PORTFOLIO II ═══════════════════ -->
+    <section class="section" id="portfolio2">
+
+      <div class="portfolio-layout">
+        <h2 class="page-heading fade-in">
+          <span data-zh>作品集 II</span>
+          <span data-en>Portfolio II</span>
+          <span class="heading-num" aria-hidden="true">04</span>
+          <div class="hline" aria-hidden="true"></div>
+        </h2>
+
+        <div class="project-grid">
+
+          <div class="project-card fade-in">
+            <span class="card-num">07</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="1.5" y="2.5" width="13" height="11" stroke="currentColor" stroke-width="0.75"/>
+                <path d="M1.5 6h13" stroke="currentColor" stroke-width="0.75"/>
+                <circle cx="4" cy="4.25" r="0.6" fill="currentColor"/>
+                <circle cx="6" cy="4.25" r="0.6" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="card-title">
+              <span data-zh>作品名稱 G</span>
+              <span data-en>Project Name G</span>
+            </div>
+            <div class="card-desc">
+              <span data-zh>第七個作品介紹，呈現你在前端或使用者介面開發方面的能力。</span>
+              <span data-en>Description for the seventh project, showcasing your frontend or UI development expertise.</span>
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">React</span>
+              <span class="card-tag">TypeScript</span>
+              <span class="card-tag">Tailwind</span>
+            </div>
+            <a class="card-link" href="#">
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="project-card fade-in" style="transition-delay: 0.1s">
+            <span class="card-num">08</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M2 2.5h12v8.5H6.5L3 14v-3H2V2.5z" stroke="currentColor" stroke-width="0.75" stroke-linejoin="round"/>
+                <path d="M5 6.5h6M5 8.5h4" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="card-title">
+              <span data-zh>作品名稱 H</span>
+              <span data-en>Project Name H</span>
+            </div>
+            <div class="card-desc">
+              <span data-zh>第八個作品介紹，呈現你在行動應用或即時通訊方面的開發能力。</span>
+              <span data-en>Description for the eighth project, demonstrating your mobile app or real-time communication development skills.</span>
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">React Native</span>
+              <span class="card-tag">WebSocket</span>
+              <span class="card-tag">Redux</span>
+            </div>
+            <a class="card-link" href="#">
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="project-card fade-in" style="transition-delay: 0.2s">
+            <span class="card-num">09</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M2 2v12h12" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/>
+                <path d="M4 10l3-4 3 3 4-5" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="card-title">
+              <span data-zh>作品名稱 I</span>
+              <span data-en>Project Name I</span>
+            </div>
+            <div class="card-desc">
+              <span data-zh>第九個作品介紹，呈現你在資料分析或商業智慧儀表板方面的能力。</span>
+              <span data-en>Description for the ninth project, showcasing your data analytics or business intelligence dashboard capabilities.</span>
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">Python</span>
+              <span class="card-tag">Pandas</span>
+              <span class="card-tag">Chart.js</span>
+              <span class="card-tag">Vue.js</span>
+            </div>
+            <a class="card-link" href="#">
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="project-card fade-in" style="transition-delay: 0.3s">
+            <span class="card-num">10</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="2.5" cy="5" r="1.5" stroke="currentColor" stroke-width="0.75"/>
+                <circle cx="2.5" cy="11" r="1.5" stroke="currentColor" stroke-width="0.75"/>
+                <circle cx="8" cy="8" r="1.5" stroke="currentColor" stroke-width="0.75"/>
+                <circle cx="13.5" cy="5" r="1.5" stroke="currentColor" stroke-width="0.75"/>
+                <circle cx="13.5" cy="11" r="1.5" stroke="currentColor" stroke-width="0.75"/>
+                <path d="M4 5l2.5 3M4 11l2.5-3M9.5 8l2.5-3M9.5 8l2.5 3" stroke="currentColor" stroke-width="0.5"/>
+              </svg>
+            </div>
+            <div class="card-title">
+              <span data-zh>作品名稱 J</span>
+              <span data-en>Project Name J</span>
+            </div>
+            <div class="card-desc">
+              <span data-zh>第十個作品介紹，呈現你在機器學習模型訓練與部署方面的能力。</span>
+              <span data-en>Description for the tenth project, demonstrating your machine learning model training and deployment capabilities.</span>
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">PyTorch</span>
+              <span class="card-tag">scikit-learn</span>
+              <span class="card-tag">FastAPI</span>
+              <span class="card-tag">Docker</span>
+            </div>
+            <a class="card-link" href="#">
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="project-card fade-in" style="transition-delay: 0.4s">
+            <span class="card-num">11</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.75"/>
+                <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4" stroke="currentColor" stroke-width="0.75" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="card-title">
+              <span data-zh>作品名稱 K</span>
+              <span data-en>Project Name K</span>
+            </div>
+            <div class="card-desc">
+              <span data-zh>第十一個作品介紹，呈現你在 DevOps 或自動化部署流程方面的能力。</span>
+              <span data-en>Description for the eleventh project, showcasing your DevOps or automated deployment pipeline expertise.</span>
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">GitHub Actions</span>
+              <span class="card-tag">Docker</span>
+              <span class="card-tag">CI/CD</span>
+              <span class="card-tag">Nginx</span>
+            </div>
+            <a class="card-link" href="#">
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="project-card fade-in" style="transition-delay: 0.5s">
+            <span class="card-num">12</span>
+            <div class="card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="2" width="12" height="3.5" stroke="currentColor" stroke-width="0.75"/>
+                <rect x="2" y="7" width="12" height="3.5" stroke="currentColor" stroke-width="0.75"/>
+                <rect x="2" y="12" width="12" height="2" stroke="currentColor" stroke-width="0.75"/>
+                <circle cx="12.5" cy="3.75" r="0.75" fill="currentColor"/>
+                <circle cx="12.5" cy="8.75" r="0.75" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="card-title">
+              <span data-zh>作品名稱 L</span>
+              <span data-en>Project Name L</span>
+            </div>
+            <div class="card-desc">
+              <span data-zh>第十二個作品介紹，呈現你在服務架構或後端基礎設施方面的設計能力。</span>
+              <span data-en>Description for the twelfth project, demonstrating your service architecture or backend infrastructure design capabilities.</span>
+            </div>
+            <div class="card-tags">
+              <span class="card-tag">Next.js</span>
+              <span class="card-tag">Prisma</span>
+              <span class="card-tag">PostgreSQL</span>
+              <span class="card-tag">Redis</span>
+            </div>
+            <a class="card-link" href="#">
+              <span data-zh>查看作品</span>
+              <span data-en>View</span>
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+                <path d="M1 4h12M10 1l3 3-3 3" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+      <span class="section-num" aria-hidden="true">04 — 04</span>
     </section>
 
   </main>
@@ -1729,7 +1949,7 @@
       window.innerWidth >= 768 &&
       !window.matchMedia('(orientation:landscape) and (max-height:500px)').matches;
 
-    const sectionIds    = ['about', 'experience', 'portfolio'];
+    const sectionIds    = ['about', 'experience', 'portfolio', 'portfolio2'];
     const mainContent   = document.getElementById('main-content');
     const sections      = document.querySelectorAll('.section');
     const dots          = document.querySelectorAll('.dot');
@@ -1820,9 +2040,9 @@
     window.addEventListener('wheel', e => {
       if (!isDesktop() || transitioning) return;
 
-      // Portfolio section: allow internal scroll before switching pages
-      if (current === 2) {
-        const layout = document.querySelector('#portfolio .portfolio-layout');
+      // Portfolio sections: allow internal scroll before switching pages
+      if (current === 2 || current === 3) {
+        const layout = document.querySelector(`#${sectionIds[current]} .portfolio-layout`);
         if (layout && layout.scrollHeight > layout.clientHeight) {
           const atBottom = layout.scrollTop + layout.clientHeight >= layout.scrollHeight - 2;
           const atTop    = layout.scrollTop <= 2;
@@ -2086,6 +2306,84 @@
           desc: 'A detailed overview of Project F. Showcase your depth in full-stack development or system architecture, explaining how you designed scalable, highly available services and ensured stable deployment through CI/CD pipelines. Describe how you coordinated frontend and backend technology choices, database design, and cloud infrastructure — along with the final system\'s performance metrics, reliability, and concrete business impact.'
         },
         tags: ['Docker', 'PostgreSQL', 'CI/CD'],
+        link: '#'
+      },
+      {
+        num: '07',
+        zh: {
+          title: '作品名稱 G',
+          desc: '這是作品 G 的詳細描述。在此說明你的前端開發或使用者介面設計能力，包含技術選型的考量、元件架構設計、效能優化策略，以及最終達到的使用者體驗成效。'
+        },
+        en: {
+          title: 'Project Name G',
+          desc: 'Detailed description of Project G. Explain your frontend development or UI design expertise, including technology selection considerations, component architecture design, performance optimization strategies, and the resulting user experience improvements.'
+        },
+        tags: ['React', 'TypeScript', 'Tailwind'],
+        link: '#'
+      },
+      {
+        num: '08',
+        zh: {
+          title: '作品名稱 H',
+          desc: '這是作品 H 的詳細描述。在此展現你在行動應用開發或即時通訊系統方面的實作深度，說明如何設計流暢的使用者體驗、即時資料同步機制，以及跨平台相容性的處理方式。'
+        },
+        en: {
+          title: 'Project Name H',
+          desc: 'Detailed description of Project H. Showcase your depth in mobile app development or real-time communication systems, explaining how you designed a smooth user experience, real-time data synchronization mechanisms, and cross-platform compatibility handling.'
+        },
+        tags: ['React Native', 'WebSocket', 'Redux'],
+        link: '#'
+      },
+      {
+        num: '09',
+        zh: {
+          title: '作品名稱 I',
+          desc: '這是作品 I 的詳細描述。在此說明你如何設計資料視覺化儀表板，包含資料流程設計、圖表選型邏輯、動態篩選功能，以及提升決策效率的具體成效。'
+        },
+        en: {
+          title: 'Project Name I',
+          desc: 'Detailed description of Project I. Explain how you designed a data visualization dashboard, including data pipeline design, chart selection logic, dynamic filtering features, and the concrete improvements in decision-making efficiency achieved.'
+        },
+        tags: ['Python', 'Pandas', 'Chart.js', 'Vue.js'],
+        link: '#'
+      },
+      {
+        num: '10',
+        zh: {
+          title: '作品名稱 J',
+          desc: '這是作品 J 的詳細描述。在此呈現你在機器學習模型訓練、調優與部署的完整流程，說明資料前處理策略、模型選型依據、效能指標表現，以及生產環境部署的架構設計。'
+        },
+        en: {
+          title: 'Project Name J',
+          desc: 'Detailed description of Project J. Present the complete workflow of machine learning model training, tuning, and deployment, explaining data preprocessing strategies, model selection rationale, performance metrics, and production deployment architecture.'
+        },
+        tags: ['PyTorch', 'scikit-learn', 'FastAPI', 'Docker'],
+        link: '#'
+      },
+      {
+        num: '11',
+        zh: {
+          title: '作品名稱 K',
+          desc: '這是作品 K 的詳細描述。在此說明你如何建立自動化部署流程，包含 CI/CD Pipeline 設計、測試自動化策略、容器化部署架構，以及如何確保上線品質與穩定性。'
+        },
+        en: {
+          title: 'Project Name K',
+          desc: 'Detailed description of Project K. Explain how you established an automated deployment pipeline, including CI/CD pipeline design, test automation strategies, containerized deployment architecture, and methods for ensuring deployment quality and stability.'
+        },
+        tags: ['GitHub Actions', 'Docker', 'CI/CD', 'Nginx'],
+        link: '#'
+      },
+      {
+        num: '12',
+        zh: {
+          title: '作品名稱 L',
+          desc: '這是作品 L 的詳細描述。在此展現你在全端平台或服務架構設計方面的能力，包含前後端技術整合、資料庫設計、快取策略，以及系統擴展性與可維護性的具體實踐。'
+        },
+        en: {
+          title: 'Project Name L',
+          desc: 'Detailed description of Project L. Showcase your capabilities in full-stack platform or service architecture design, including frontend/backend technology integration, database design, caching strategies, and concrete practices for system scalability and maintainability.'
+        },
+        tags: ['Next.js', 'Prisma', 'PostgreSQL', 'Redis'],
         link: '#'
       }
     ];
